@@ -1,0 +1,5 @@
+lein run zk -n 500
+lein run kafka -f kafka -n 500
+lein run cassandra-set -n 1000
+lein run cassandra-isolation -n 2000 -r 10 -f noop
+lein run cassandra-transaction -n 1000 -r 10
