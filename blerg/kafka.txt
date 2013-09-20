@@ -1,0 +1,88 @@
+In the last Jepsen post, we learned about NuoDB. Now it's time to switch gears and discuss Kafka. Up next: Cassandra.
+
+Kafka is a messaging system, which provides an immutable, linearizable, sharded log of messages. Throughput and storage capacity scale linearly with nodes, and thanks to some impressive engineering tricks, Kafka can push astonishingly high volume through each node; often saturating disk, network, or both.
+
+In the upcoming release, version 0.8, Kafka is introducing a new feature: replication. Replication enhances the durability and availability of Kafka by duplicating each shard's data across multiple nodes. How does it work?
+
+Here's a slide from Jun Rao's overview of the replication architecture.
+
+[[image:kafka-talk.png]]
+
+In the context of the CAP theorem, Kafka claims to provide both serializability and availability by sacrificing partition tolerance. Kafka can do this because LinkedIn's brokers run in a datacenter, and as we've seen from Microsoft, Amazon, and Google, datacenters rarely experience network partitions.
+
+We saw that NuoDB, in purporting to refute the CAP theorem, actually sacrificed availability, becoming a CP system. What happens to Kafka during a network partion?
+
+## Design
+
+Kafka's replication design uses leaders, elected via Zookeeper. Each shard has a single leader. The leader maintains a set of in-sync-replicas: all the nodes which are up-to-date with the leader's log, and actively acknowledging new writes. Every write goes through the leader and is propagated to every node in the In Sync Replica set, or ISR. Once all nodes in the ISR have acknowledged the request, the leader considers it committed, and can ack to the client.
+
+[[image:kafka-isr.jpg]]
+
+First, I should mention that Kafka has some parameters that control write consistency. The default behave like MongoDB: writes are not replicated prior to acknowledgement, which allows for higher throughput at the cost of safety. In this test, we'll be running in synchronous mode:
+
+```clj
+(producer/producer
+  {"metadata.broker.list" (str (:host opts) ":9092")
+   "request.required.acks" "-1" ; all in-sync brokers
+   "producer.type"         "sync"
+   "message.send.max_retries" "1"
+   "connect.timeout.ms"    "1000"
+   "retry.backoff.ms"       "1000"
+   "serializer.class"     "kafka.serializer.DefaultEncoder"
+   "partitioner.class"    "kafka.producer.DefaultPartitioner"})
+```
+
+When a node fails, the leader detects that writes have timed out, and removes that node from the ISR in Zookeeper.
+
+[[image:kafka-isr-2.jpg]]
+
+So far, so good; this is about what you'd expect from a synchronous replication design. But then there's this claim from the replication blog posts and wiki: with f nodes, Kafka can tolerate f-1 failures.
+
+This is of note because most CP systems only claim tolerance to n/2-1 failures; e.g. a majority of nodes must be connected and healthy in order to continue. Linkedin says that majority quorums are not reliable enough, in their operational experience, and that tolerating the loss of all but one node is an important aspect of the design.
+
+[[image:kafka-isr-3.jpg]]
+
+Kafka attains this goal by allowing the ISR to shrink to just *one* node: the leader itself. In this state, the leader is acknowledging writes which have been only been persisted locally. What happens if the leader then loses its Zookeeper claim?
+
+[[image:kafka-isr-4.jpg]]
+
+The system *cannot* safely continue--but the show must go on. In this case, Kafka holds a new election and promotes any remaining node--which could be arbitrarily far behind the original leader. That node begins accepting requests and replicating them to the new ISR.
+
+[[image:kafka-isr-5.jpg]]
+
+When the original leader comes back online, we have a conflict. The old leader is identical with the new up until some point, after which they diverge. Two possibilities come to mind: we could preserve *both* writes, perhaps appending the old leader's writes to the new--but this would violate the linear ordering property Kafka aims to preserve. Another option is to drop the old leader's conflicting writes altogether. This means destroying committed data.
+
+In order to see this failure mode, two things have to happen:
+
+1. The ISR must shrink such that some node (the new leader) is no longer in the ISR.
+2. All nodes in the ISR must lose their Zookeeper connection.
+
+For instance, a lossy NIC which drops some packets but not others might isolate a leader from its Kafka followers, but break the Zookeeper connection slightly later. Or the leader could be partitioned from the other kafka nodes by a network failure, and then crash, suffer a HW failure, or be restarted by an administrator. Or there could be correlated failures across multiple nodes, though this is less likely.
+
+In short, two well-timed failures (or, depending on how you look at it, one
+complex failure) on a single node can cause the loss of arbitrary writes in
+Kafka's replication design.
+
+## Results
+
+To see this, we'll enqueue a series of integers into a Kafka cluster, then
+isolate a leader using iptables from the other Kafka nodes. Latencies spike initially, while the leader waits for the missing nodes to respond. A few requests may fail, but the ISR shrinks in a few seconds and writes begin to succeed again.
+
+[[image:kafka-log-1.png]]
+
+We'll allow it to acknowledge writes independently, for a time.
+
+[[image:kafka-log-2.png]]
+
+Then we totally partition the leader. ZK detects the leader's disconnection and
+the remaining nodes will promote a new leader, causing data loss. At the end of
+the run, Kafka typically acknowledges 99.9--100% of writes. However, *half* of
+those writes (those made during the partition) are lost.
+
+## Discussion
+
+Kafka's replication claimed to be CA, but in the presence of a failure, threw
+away an arbitrarily large volume of committed writes. It claimed tolerance to
+F-1 failures, but a single node could cause catastrophe. How could we improve?
+
+All redundant systems have a breaking point. If you lose all N nodes in a system which writes to N nodes synchronously, you will lose data. If you lose 1 node in a system which writes to 1 node synchronously, you will lose data. There's a well-known 

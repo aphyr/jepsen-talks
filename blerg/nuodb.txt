@@ -1,0 +1,102 @@
+Previously on Jepsen, we explored Zookeeper. Next up: Kafka.
+
+## Marketing
+
+NuoDB came to by attention through an amazing mailing list thread by the famous Jim Starkey, in which he argues that he has disproved the CAP theorem:
+
+Mr. Starkey's company NimbusDB later became NuoDB, and I was naturally curious to see the claimed 'wooden stake' in practice. I set out trying to figure out exactly what NuoDB's consistency model *is*.
+
+"If the CAP theorem means that all surviving nodes must be able to continue processing without communication after a network failure, than NUODB is not partition resistant."
+
+Note that the CAP theorem's definition of availability requires that all requests to non-failing (e.g. crash-stopped) nodes succeed.
+
+"If partition resistance includes the possibility for a surviving subset of the
+chorus to sing on, then NUODB refutes the CAP theorem."
+
+This statement is incoherent. We know systems exist in which a surviving subset
+of nodes continue processing during a partition. They are consistent with the
+CAP theorem because in those systems (e.g. Zookeeper) some requests to
+non-failing nodes do not succeed.
+
+At the end of the day, it's not really clear *what* happens to NuoDB during a partition. To find out, we'll need to set up a cluster and test.
+
+## Operational notes
+
+Setting up a NuoDB cluster turns out to be more difficult than I anticipated.
+There are race conditions in the cluster join process. Each node has a seed
+node to join to, which determines the cluster it will become a part of. If that seed is inaccessible at startup, the node will quietly become a part of a new, independent cluster--and will not, as far as I can tell, join the original cluster even if the node becomes accessible later. Consequently, performing a cold start of the cluster is likely to result in several disjoint clusters, up to and including every node considering itself a part of an independent database.
+
+This is a *catastrophic* outcome: if any clients manage to connect to one of these isolated clusters, their writes will almost certainly conflict with other clusters. You'll see conflicting row values, broken primary keys, invalid foreign key relationships, and so on. I have no idea how you go about repairing that kind of damage without simply dropping all the data on one side of the cluster--a process that NuoDB, as it turns out, is happy to do for you.
+
+You can join a node to itself. This is easy to do accidentally if you, say, deploy the same seed node to every node's configuration file. The consequences are... interesting.
+
+Then there are race conditions in database creation. For instance, if you
+create and delete the same simple table a few times in succession, you can back yourself into this corner:
+
+[[image:nuodb-fail.png]]
+
+Finally, be aware that restarting a crashed NuoDB node does *not* restore its
+transaction managers or storage managers; if you do a naive rolling restart,
+all your data vanishes. The cluster does not attempt to set up failover
+replicas when nodes become unavailable, or to  This is, after some discussion
+with the NuoDB team, desired behavior for their customers.
+
+## What happens during partition?
+
+With the Java driver, you could see any number of failures during a network partition:
+
+- "Duplicate value in unique index SEQUENCES..PRIMARY_KEY"
+- End of stream reached
+- Broken pipe
+- Connection reset
+- Indefinite latency
+
+And I do mean indefinite. I haven't actually found an upper limit to how long
+NuoDB will block for. As far as I can tell, when a node is inaccessible,
+operations block as long as the partition lasts. Moreover, they block
+*globally*: no subset of the cluster, even though a fully connected majority
+component existed, responded during the partition.
+
+[[image:nuodb-1.png]]
+
+Perhaps because all operations are queued without timeout, it takes a long time
+for NuoDB latencies to recover after the partition resolves. In my tests,
+latencies continued to spike well into the 30-60 second range for as many as
+1500 seconds after the partition ended. I have not found an upper limit for
+this behavior, but eventually, something somewhere must run out of ram.
+
+[[image:nuodb-2.png]]
+
+## Results
+
+There is good news here: NuoDB typically acknowledged 55% of writes in my tests
+(losing most, but not all, writes made during the partition due to CaS
+conflict). All acknowledged writes made at the SERIAL consistency level *were*
+present in the final dataset. There were also a trivial fraction of false
+negatives, which is typical for most CP systems. This indicates that NUODB is
+capable of preserving some sort of linear order over operations to a single
+cell, even in the presence of partitions. However, it cannot claim to be CP,
+because NuoDB by design does not enforce serializability for all write
+operation. I'm not certain about this, but from my reading and conversations
+with the NuoDB team I *believe* the database provides Snapshot Isolation (SI),
+which is an impressive feat for a distributed SQL database.
+
+[[image:nuodb-diagram.png]]
+
+Does NuoDB refute the CAP theorem? Of course it doesn't. By deferring all
+operations until the partition resolves, NuoDB is not even close to available.
+In fact, it's a good deal less available than other strongly consistent
+systems: Zookeeper, for example, remains available on all nodes connected to a
+majority component. NuoDB is another example of the adage that systems which
+purport to be CA or CAP usually sacrifice availability or consistency in
+spectacular ways, when a failure does occur.
+
+Blocking all writes during partition is, according to the NuoDB team, intended behavior. However, there is experimental liveness detection code in the most recent release, which will hopefully allow NuoDB to begin timing out requests to inaccessible nodes. I haven't been able to test that code path yet, but future releases may enable it by default.
+
+If you are considering using NuoDB, be advised that the project's marketing and
+documentation may exceed its present capabilities. Enable liveness detection if
+available, and set up your own client timeouts to avoid propagating high
+latencies to other systems. Try to build backpressure hints into your clients
+to reduce the requests against NuoDB during failure; the latency storm which persists after the network recovers is proportional to the backlog of requests. Finally, be aware of the operational caveats mentioned earlier: monitor your nodes carefully, restart their storage and transaction managers as appropriate, and verify that newly started nodes have indeed joined the cluster before exposing them to clients.
+
+In the next post, we'll explore Kafka.
