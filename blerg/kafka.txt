@@ -65,8 +65,10 @@ Kafka's replication design.
 
 ## Results
 
-To see this, we'll enqueue a series of integers into a Kafka cluster, then
-isolate a leader using iptables from the other Kafka nodes. Latencies spike initially, while the leader waits for the missing nodes to respond. A few requests may fail, but the ISR shrinks in a few seconds and writes begin to succeed again.
+We'll enqueue a series of integers into a Kafka cluster, then isolate a leader
+using iptables from the other Kafka nodes. Latencies spike initially, while the
+leader waits for the missing nodes to respond. A few requests may fail, but the
+ISR shrinks in a few seconds and writes begin to succeed again.
 
 [[image:kafka-log-1.png]]
 
@@ -85,4 +87,6 @@ Kafka's replication claimed to be CA, but in the presence of a failure, threw
 away an arbitrarily large volume of committed writes. It claimed tolerance to
 F-1 failures, but a single node could cause catastrophe. How could we improve?
 
-All redundant systems have a breaking point. If you lose all N nodes in a system which writes to N nodes synchronously, you will lose data. If you lose 1 node in a system which writes to 1 node synchronously, you will lose data. There's a well-known 
+All redundant systems have a breaking point. If you lose all N nodes in a
+system which writes to N nodes synchronously, it'll lose data. If you lose 1
+node in a system which writes to 1 node synchronously, that'll lose data too. There's a tradeoff to be made between how many nodes are required for a write, and the number of faults which cause data loss.Is it preferable to use 
