@@ -1,0 +1,885 @@
+Testing jepsen.system.etcd-test
+INFO  jepsen.os.debian - :n3 setting up debian
+INFO  jepsen.os.debian - :n1 setting up debian
+INFO  jepsen.os.debian - :n5 setting up debian
+INFO  jepsen.os.debian - :n2 setting up debian
+INFO  jepsen.os.debian - :n4 setting up debian
+INFO  jepsen.os.debian - :n5 debian set up
+INFO  jepsen.os.debian - :n1 debian set up
+INFO  jepsen.os.debian - :n3 debian set up
+INFO  jepsen.os.debian - :n2 debian set up
+INFO  jepsen.os.debian - :n4 debian set up
+INFO  jepsen.system.etcd - :n4 etcd nuked
+INFO  jepsen.system.etcd - :n2 etcd nuked
+INFO  jepsen.system.etcd - :n1 etcd nuked
+INFO  jepsen.system.etcd - :n3 etcd nuked
+INFO  jepsen.system.etcd - :n5 etcd nuked
+INFO  jepsen.system.etcd - Running nodes: {:n1 false, :n2 false, :n3 false, :n4 false, :n5 false}
+INFO  jepsen.system.etcd - :n5 etcd nuked
+INFO  jepsen.system.etcd - :n2 etcd nuked
+INFO  jepsen.system.etcd - :n4 etcd nuked
+INFO  jepsen.system.etcd - :n3 etcd nuked
+INFO  jepsen.system.etcd - :n1 etcd nuked
+INFO  jepsen.system.etcd - :n1 starting etcd
+INFO  jepsen.system.etcd - :n5 starting etcd
+INFO  jepsen.system.etcd - :n2 starting etcd
+INFO  jepsen.system.etcd - :n3 starting etcd
+INFO  jepsen.system.etcd - :n4 starting etcd
+INFO  jepsen.system.etcd - :n4 etcd ready
+INFO  jepsen.system.etcd - :n2 etcd ready
+INFO  jepsen.system.etcd - :n3 etcd ready
+INFO  jepsen.system.etcd - Running nodes: {:n1 true, :n2 true, :n3 true, :n4 true, :n5 true}
+INFO  jepsen.system.etcd - :n5 etcd ready
+INFO  jepsen.system.etcd - :n1 etcd ready
+INFO  jepsen.core - Worker 2 starting
+INFO  jepsen.core - Worker 4 starting
+INFO  jepsen.core - Worker 1 starting
+INFO  jepsen.core - Worker 3 starting
+INFO  jepsen.core - Worker 0 starting
+INFO  jepsen.util - 3 :invoke :write  1
+INFO  jepsen.util - 0 :invoke :cas  [4 1]
+INFO  jepsen.util - 2 :invoke :write  1
+INFO  jepsen.util - 1 :invoke :write  2
+INFO  jepsen.util - 4 :invoke :cas  [2 2]
+INFO  jepsen.util - 1 :ok :write  2
+INFO  jepsen.util - 3 :ok :write  1
+INFO  jepsen.util - 4 :ok :cas  [2 2]
+INFO  jepsen.util - 2 :ok :write  1
+WARN  jepsen.core - Process 0 indeterminate
+clojure.lang.ExceptionInfo: throw+: {:status 404, :errorCode 100, :message "Key not found", :cause "/jepsen", :index 5} {:object {:status 404, :errorCode 100, :message "Key not found", :cause "/jepsen", :index 5}, :environment {client {:timeout 1000, :swap-retry-delay 100, :endpoint "http://n1:4001"}, key "jepsen", value "4", value' "1", opts {}, map__7477 {:orig-content-encoding nil, :trace-redirects ["http://n1:4001/v2/keys/jepsen"], :request-time 548, :status 404, :headers {"Connection" "close", "Content-Length" "72", "Date" "Tue, 15 Apr 2014 04:02:33 GMT", "X-Etcd-Index" "5", "Content-Type" "text/plain; charset=utf-8"}, :body {:errorCode 100, :message "Key not found", :cause "/jepsen", :index 5}}, status 404, body {:errorCode 100, :message "Key not found", :cause "/jepsen", :index 5}}}
+  at verschlimmbesserung.core$cas_BANG_.invoke(core.clj:332)
+  at verschlimmbesserung.core$cas_BANG_.invoke(core.clj:329)
+  at jepsen.system.etcd.CASClient.invoke_BANG_(etcd.clj:157)
+  at jepsen.core$worker$fn__4630$fn__4631.invoke(core.clj:122)
+  at jepsen.core$worker$fn__4630.invoke(core.clj:120)
+  at clojure.core$binding_conveyor_fn$fn__4145.invoke(core.clj:1910)
+  at clojure.lang.AFn.call(AFn.java:18)
+  at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+  at java.lang.Thread.run(Thread.java:744)
+Caused by: clojure.lang.ExceptionInfo: clj-http: status 404 {:orig-content-encoding nil, :trace-redirects ["http://n1:4001/v2/keys/jepsen"], :request-time 548, :status 404, :headers {"Connection" "close", "Content-Length" "72", "Date" "Tue, 15 Apr 2014 04:02:33 GMT", "X-Etcd-Index" "5", "Content-Type" "text/plain; charset=utf-8"}, :body {:errorCode 100, :message "Key not found", :cause "/jepsen", :index 5}} {:object {:orig-content-encoding nil, :trace-redirects ["http://n1:4001/v2/keys/jepsen"], :request-time 548, :status 404, :headers {"Connection" "close", "Content-Length" "72", "Date" "Tue, 15 Apr 2014 04:02:33 GMT", "X-Etcd-Index" "5", "Content-Type" "text/plain; charset=utf-8"}, :body {:errorCode 100, :message "Key not found", :cause "/jepsen", :index 5}}, :environment {client #<client$wrap_output_coercion$fn__7217 clj_http.client$wrap_output_coercion$fn__7217@4b5574d>, req {:follow-redirects true, :throw-exceptions? true, :conn-timeout 1000, :as :json, :socket-timeout 1000, :throw-entire-message? true, :url "http://n1:4001/v2/keys/jepsen", :query-params {:value "1", :prevValue "4"}, :coerce :always, :force-redirects true, :request-method :put}, map__7103 {:orig-content-encoding nil, :trace-redirects ["http://n1:4001/v2/keys/jepsen"], :request-time 548, :status 404, :headers {"Connection" "close", "Content-Length" "72", "Date" "Tue, 15 Apr 2014 04:02:33 GMT", "X-Etcd-Index" "5", "Content-Type" "text/plain; charset=utf-8"}, :body {:errorCode 100, :message "Key not found", :cause "/jepsen", :index 5}}, resp {:orig-content-encoding nil, :trace-redirects ["http://n1:4001/v2/keys/jepsen"], :request-time 548, :status 404, :headers {"Connection" "close", "Content-Length" "72", "Date" "Tue, 15 Apr 2014 04:02:33 GMT", "X-Etcd-Index" "5", "Content-Type" "text/plain; charset=utf-8"}, :body {:errorCode 100, :message "Key not found", :cause "/jepsen", :index 5}}, status 404}}
+  at clj_http.client$wrap_exceptions$fn__7102.invoke(client.clj:155)
+  at clj_http.client$wrap_accept$fn__7257.invoke(client.clj:490)
+  at clj_http.client$wrap_accept_encoding$fn__7263.invoke(client.clj:504)
+  at clj_http.client$wrap_content_type$fn__7252.invoke(client.clj:480)
+  at clj_http.client$wrap_form_params$fn__7303.invoke(client.clj:595)
+  at clj_http.client$wrap_nested_params$fn__7321.invoke(client.clj:619)
+  at clj_http.client$wrap_method$fn__7298.invoke(client.clj:578)
+  at clj_http.cookies$wrap_cookies$fn__5987.invoke(cookies.clj:121)
+  at clj_http.links$wrap_links$fn__6257.invoke(links.clj:50)
+  at clj_http.client$wrap_unknown_host$fn__7330.invoke(client.clj:638)
+  at clj_http.client$put.doInvoke(client.clj:759)
+  at clojure.lang.RestFn.invoke(RestFn.java:423)
+  ... 11 more
+INFO  jepsen.util - 3 :invoke :read nil
+INFO  jepsen.util - 2 :invoke :cas  [1 2]
+INFO  jepsen.util - 1 :invoke :read nil
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 5 :invoke :read nil
+INFO  jepsen.util - 3 :ok :read 1
+INFO  jepsen.util - 1 :ok :read 1
+INFO  jepsen.util - 4 :ok :read 1
+INFO  jepsen.util - 5 :ok :read 1
+INFO  jepsen.util - 2 :ok :cas  [1 2]
+INFO  jepsen.util - 1 :invoke :write  2
+INFO  jepsen.util - 4 :invoke :write  4
+INFO  jepsen.util - 3 :invoke :read nil
+INFO  jepsen.util - 5 :invoke :read nil
+INFO  jepsen.util - 5 :ok :read 2
+INFO  jepsen.util - 3 :ok :read 2
+INFO  jepsen.util - 2 :invoke :cas  [3 2]
+INFO  jepsen.util - 4 :ok :write  4
+INFO  jepsen.util - 1 :ok :write  2
+INFO  jepsen.util - 2 :fail :cas  [3 2]
+INFO  jepsen.util - 5 :invoke :write  3
+INFO  jepsen.util - 3 :invoke :write  3
+INFO  jepsen.util - 1 :invoke :write  2
+INFO  jepsen.util - 4 :invoke :write  1
+INFO  jepsen.util - 5 :ok :write  3
+INFO  jepsen.util - 2 :invoke :write  1
+INFO  jepsen.util - 3 :ok :write  3
+INFO  jepsen.util - 1 :ok :write  2
+INFO  jepsen.util - 4 :ok :write  1
+INFO  jepsen.util - 2 :ok :write  1
+INFO  jepsen.util - 5 :invoke :read nil
+INFO  jepsen.util - 5 :ok :read 1
+INFO  jepsen.util - 3 :invoke :read nil
+INFO  jepsen.util - 3 :ok :read 1
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 2 :invoke :cas  [3 4]
+INFO  jepsen.util - 1 :invoke :write  1
+INFO  jepsen.util - 4 :ok :read 1
+INFO  jepsen.util - 1 :ok :write  1
+INFO  jepsen.util - 2 :fail :cas  [3 4]
+INFO  jepsen.util - 5 :invoke :read nil
+INFO  jepsen.util - 5 :ok :read 1
+INFO  jepsen.util - 3 :invoke :read nil
+INFO  jepsen.util - 3 :ok :read 1
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 4 :ok :read 1
+INFO  jepsen.util - 1 :invoke :write  4
+INFO  jepsen.util - 2 :invoke :read nil
+INFO  jepsen.util - 2 :ok :read 1
+INFO  jepsen.util - 5 :invoke :cas  [3 4]
+INFO  jepsen.util - 1 :ok :write  4
+INFO  jepsen.util - 3 :invoke :cas  [1 0]
+INFO  jepsen.util - 5 :fail :cas  [3 4]
+INFO  jepsen.util - 3 :fail :cas  [1 0]
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 4 :ok :read 4
+INFO  jepsen.util - 2 :invoke :read nil
+INFO  jepsen.util - 2 :ok :read 4
+INFO  jepsen.util - 1 :invoke :read nil
+INFO  jepsen.util - 1 :ok :read 4
+INFO  jepsen.util - 5 :invoke :write  2
+INFO  jepsen.util - 3 :invoke :cas  [2 1]
+INFO  jepsen.util - 5 :ok :write  2
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 4 :ok :read 2
+INFO  jepsen.util - 3 :ok :cas  [2 1]
+INFO  jepsen.util - 2 :invoke :write  0
+INFO  jepsen.util - :nemesis  :info :start  nil
+INFO  jepsen.util - 2 :ok :write  0
+INFO  jepsen.util - 1 :invoke :write  3
+INFO  jepsen.util - 1 :ok :write  3
+INFO  jepsen.util - 5 :invoke :read nil
+INFO  jepsen.util - 5 :ok :read 3
+INFO  jepsen.util - 4 :invoke :write  3
+INFO  jepsen.util - 3 :invoke :write  2
+INFO  jepsen.util - 4 :ok :write  3
+INFO  jepsen.util - 2 :invoke :write  0
+INFO  jepsen.util - 3 :ok :write  2
+INFO  jepsen.util - 1 :invoke :write  4
+WARN  jepsen.core - Nemesis crashed evaluating {:time 11392975671, :process :nemesis, :type :info, :f :start}
+java.util.concurrent.ExecutionException: com.jcraft.jsch.JSchException: Packet corrupt
+  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
+  at java.util.concurrent.FutureTask.get(FutureTask.java:188)
+  at clojure.core$deref_future.invoke(core.clj:2180)
+  at clojure.core$future_call$reify__6320.deref(core.clj:6417)
+  at clojure.core$deref.invoke(core.clj:2200)
+  at clojure.core$map$fn__4245.invoke(core.clj:2559)
+  at clojure.lang.LazySeq.sval(LazySeq.java:40)
+  at clojure.lang.LazySeq.seq(LazySeq.java:49)
+  at clojure.lang.RT.seq(RT.java:484)
+  at clojure.core$seq.invoke(core.clj:133)
+  at clojure.core$dorun.invoke(core.clj:2855)
+  at jepsen.nemesis$partition_BANG_.invoke(nemesis.clj:25)
+  at jepsen.nemesis$partitioner$reify__8200.invoke_BANG_(nemesis.clj:76)
+  at jepsen.core$nemesis_worker$fn__4642$fn__4647.invoke(core.clj:181)
+  at jepsen.core$nemesis_worker$fn__4642.invoke(core.clj:179)
+  at clojure.core$binding_conveyor_fn$fn__4145.invoke(core.clj:1910)
+  at clojure.lang.AFn.call(AFn.java:18)
+  at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+  at java.lang.Thread.run(Thread.java:744)
+Caused by: com.jcraft.jsch.JSchException: Packet corrupt
+  at com.jcraft.jsch.Session.start_discard(Session.java:1049)
+  at com.jcraft.jsch.Session.read(Session.java:919)
+  at com.jcraft.jsch.Session.connect(Session.java:309)
+  at com.jcraft.jsch.Session.connect(Session.java:183)
+  at clj_ssh.ssh$connect.invoke(ssh.clj:327)
+  at clj_ssh.ssh$ssh.invoke(ssh.clj:548)
+  at jepsen.control$ssh_STAR_.invoke(control.clj:111)
+  at jepsen.control$exec_STAR_.doInvoke(control.clj:117)
+  at clojure.lang.RestFn.applyTo(RestFn.java:137)
+  at clojure.core$apply.invoke(core.clj:624)
+  at jepsen.control$exec.doInvoke(control.clj:131)
+  at clojure.lang.RestFn.invoke(RestFn.java:551)
+  at jepsen.nemesis$snub_node_BANG_.invoke(nemesis.clj:12)
+  at clojure.core$map$fn__4245.invoke(core.clj:2559)
+  at clojure.lang.LazySeq.sval(LazySeq.java:40)
+  at clojure.lang.LazySeq.seq(LazySeq.java:49)
+  at clojure.lang.Cons.next(Cons.java:39)
+  at clojure.lang.LazySeq.next(LazySeq.java:81)
+  at clojure.lang.RT.next(RT.java:599)
+  at clojure.core$next.invoke(core.clj:64)
+  at clojure.core$dorun.invoke(core.clj:2856)
+  at jepsen.nemesis$snub_nodes_BANG_.invoke(nemesis.clj:17)
+  at jepsen.nemesis$partition_BANG_$fn__8182$fn__8184.invoke(nemesis.clj:27)
+  ... 6 more
+INFO  jepsen.util - 2 :ok :write  0
+INFO  jepsen.util - 1 :ok :write  4
+INFO  jepsen.util - 5 :invoke :cas  [1 3]
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 4 :ok :read 2
+INFO  jepsen.util - 3 :invoke :write  4
+WARN  jepsen.core - Process 5 indeterminate
+com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'command': was expecting ('true', 'false' or 'null')
+ at [Source: java.io.StringReader@52b3135e; line: 1, column: 8]
+  at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1524)
+  at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:557)
+  at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2042)
+  at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1412)
+  at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:679)
+  at cheshire.parse$parse.invoke(parse.clj:87)
+  at cheshire.core$parse_string.invoke(core.clj:92)
+  at cheshire.core$parse_string.invoke(core.clj:88)
+  at clojure.lang.Var.invoke(Var.java:383)
+  at clojure.lang.AFn.applyToHelper(AFn.java:156)
+  at clojure.lang.Var.applyTo(Var.java:700)
+  at clojure.core$apply.invoke(core.clj:624)
+  at clj_http.client$json_decode.doInvoke(client.clj:64)
+  at clojure.lang.RestFn.invoke(RestFn.java:421)
+  at clj_http.client$coerce_json_body.doInvoke(client.clj:293)
+  at clojure.lang.RestFn.invoke(RestFn.java:470)
+  at clj_http.client$eval7178$fn__7179.invoke(client.clj:306)
+  at clojure.lang.MultiFn.invoke(MultiFn.java:231)
+  at clj_http.client$wrap_output_coercion$fn__7217.invoke(client.clj:368)
+  at clj_http.client$wrap_exceptions$fn__7102.invoke(client.clj:149)
+  at clj_http.client$wrap_accept$fn__7257.invoke(client.clj:490)
+  at clj_http.client$wrap_accept_encoding$fn__7263.invoke(client.clj:504)
+  at clj_http.client$wrap_content_type$fn__7252.invoke(client.clj:480)
+  at clj_http.client$wrap_form_params$fn__7303.invoke(client.clj:595)
+  at clj_http.client$wrap_nested_params$fn__7321.invoke(client.clj:619)
+  at clj_http.client$wrap_method$fn__7298.invoke(client.clj:578)
+  at clj_http.cookies$wrap_cookies$fn__5987.invoke(cookies.clj:121)
+  at clj_http.links$wrap_links$fn__6257.invoke(links.clj:50)
+  at clj_http.client$wrap_unknown_host$fn__7330.invoke(client.clj:638)
+  at clj_http.client$put.doInvoke(client.clj:759)
+  at clojure.lang.RestFn.invoke(RestFn.java:423)
+  at verschlimmbesserung.core$cas_BANG_.invoke(core.clj:332)
+  at verschlimmbesserung.core$cas_BANG_.invoke(core.clj:329)
+  at jepsen.system.etcd.CASClient.invoke_BANG_(etcd.clj:157)
+  at jepsen.core$worker$fn__4630$fn__4631.invoke(core.clj:122)
+  at jepsen.core$worker$fn__4630.invoke(core.clj:120)
+  at clojure.core$binding_conveyor_fn$fn__4145.invoke(core.clj:1910)
+  at clojure.lang.AFn.call(AFn.java:18)
+  at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+  at java.lang.Thread.run(Thread.java:744)
+INFO  jepsen.util - 2 :invoke :cas  [3 4]
+INFO  jepsen.util - 1 :invoke :write  4
+WARN  jepsen.core - Process 3 indeterminate
+com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'raft': was expecting ('true', 'false' or 'null')
+ at [Source: java.io.StringReader@86d5363; line: 1, column: 5]
+  at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:1524)
+  at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:557)
+  at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2042)
+  at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._handleOddValue(ReaderBasedJsonParser.java:1412)
+  at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:679)
+  at cheshire.parse$parse.invoke(parse.clj:87)
+  at cheshire.core$parse_string.invoke(core.clj:92)
+  at cheshire.core$parse_string.invoke(core.clj:88)
+  at clojure.lang.Var.invoke(Var.java:383)
+  at clojure.lang.AFn.applyToHelper(AFn.java:156)
+  at clojure.lang.Var.applyTo(Var.java:700)
+  at clojure.core$apply.invoke(core.clj:624)
+  at clj_http.client$json_decode.doInvoke(client.clj:64)
+  at clojure.lang.RestFn.invoke(RestFn.java:421)
+  at clj_http.client$coerce_json_body.doInvoke(client.clj:293)
+  at clojure.lang.RestFn.invoke(RestFn.java:470)
+  at clj_http.client$eval7178$fn__7179.invoke(client.clj:306)
+  at clojure.lang.MultiFn.invoke(MultiFn.java:231)
+  at clj_http.client$wrap_output_coercion$fn__7217.invoke(client.clj:368)
+  at clj_http.client$wrap_exceptions$fn__7102.invoke(client.clj:149)
+  at clj_http.client$wrap_accept$fn__7257.invoke(client.clj:490)
+  at clj_http.client$wrap_accept_encoding$fn__7263.invoke(client.clj:504)
+  at clj_http.client$wrap_content_type$fn__7252.invoke(client.clj:480)
+  at clj_http.client$wrap_form_params$fn__7303.invoke(client.clj:595)
+  at clj_http.client$wrap_nested_params$fn__7321.invoke(client.clj:619)
+  at clj_http.client$wrap_method$fn__7298.invoke(client.clj:578)
+  at clj_http.cookies$wrap_cookies$fn__5987.invoke(cookies.clj:121)
+  at clj_http.links$wrap_links$fn__6257.invoke(links.clj:50)
+  at clj_http.client$wrap_unknown_host$fn__7330.invoke(client.clj:638)
+  at clj_http.client$put.doInvoke(client.clj:759)
+  at clojure.lang.RestFn.invoke(RestFn.java:423)
+  at verschlimmbesserung.core$reset_BANG_.invoke(core.clj:259)
+  at verschlimmbesserung.core$reset_BANG_.invoke(core.clj:257)
+  at jepsen.system.etcd.CASClient.invoke_BANG_(etcd.clj:149)
+  at jepsen.core$worker$fn__4630$fn__4631.invoke(core.clj:122)
+  at jepsen.core$worker$fn__4630.invoke(core.clj:120)
+  at clojure.core$binding_conveyor_fn$fn__4145.invoke(core.clj:1910)
+  at clojure.lang.AFn.call(AFn.java:18)
+  at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+  at java.lang.Thread.run(Thread.java:744)
+INFO  jepsen.util - 1 :ok :write  4
+INFO  jepsen.util - 2 :fail :cas  [3 4]
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 4 :ok :read 4
+INFO  jepsen.util - 10  :invoke :cas  [4 0]
+INFO  jepsen.util - 8 :invoke :read nil
+INFO  jepsen.util - 8 :ok :read 4
+INFO  jepsen.util - 10  :ok :cas  [4 0]
+INFO  jepsen.util - 1 :invoke :cas  [4 1]
+INFO  jepsen.util - 2 :invoke :cas  [2 0]
+INFO  jepsen.util - 4 :invoke :cas  [0 4]
+INFO  jepsen.util - 1 :fail :cas  [4 1]
+INFO  jepsen.util - 2 :fail :cas  [2 0]
+INFO  jepsen.util - 4 :ok :cas  [0 4]
+INFO  jepsen.util - 8 :invoke :read nil
+INFO  jepsen.util - 8 :ok :read 4
+INFO  jepsen.util - 10  :invoke :read nil
+INFO  jepsen.util - 10  :ok :read 4
+INFO  jepsen.util - 2 :invoke :read nil
+INFO  jepsen.util - 1 :invoke :cas  [4 3]
+INFO  jepsen.util - 2 :ok :read 4
+INFO  jepsen.util - 1 :ok :cas  [4 3]
+INFO  jepsen.util - 4 :invoke :write  0
+INFO  jepsen.util - 8 :invoke :read nil
+INFO  jepsen.util - 8 :ok :read 3
+INFO  jepsen.util - 4 :ok :write  0
+INFO  jepsen.util - 10  :invoke :read nil
+INFO  jepsen.util - 10  :ok :read 0
+INFO  jepsen.util - 2 :invoke :cas  [3 4]
+INFO  jepsen.util - 1 :invoke :cas  [3 1]
+INFO  jepsen.util - 8 :invoke :cas  [1 0]
+INFO  jepsen.util - 4 :invoke :write  2
+INFO  jepsen.util - 2 :fail :cas  [3 4]
+INFO  jepsen.util - 10  :invoke :read nil
+INFO  jepsen.util - 10  :ok :read 0
+INFO  jepsen.util - 1 :fail :cas  [3 1]
+INFO  jepsen.util - 4 :ok :write  2
+INFO  jepsen.util - 8 :fail :cas  [1 0]
+INFO  jepsen.util - 2 :invoke :cas  [0 0]
+INFO  jepsen.util - 10  :invoke :cas  [0 2]
+INFO  jepsen.util - 1 :invoke :read nil
+INFO  jepsen.util - 1 :ok :read 2
+INFO  jepsen.util - 4 :invoke :read nil
+INFO  jepsen.util - 8 :invoke :read nil
+INFO  jepsen.util - 4 :ok :read 2
+INFO  jepsen.util - 8 :ok :read 2
+INFO  jepsen.util - 2 :fail :cas  [0 0]
+INFO  jepsen.util - 10  :fail :cas  [0 2]
+INFO  jepsen.util - 1 :invoke :write  0
+INFO  jepsen.util - 4 :invoke :cas  [2 4]
+INFO  jepsen.util - 8 :invoke :write  4
+INFO  jepsen.util - 2 :invoke :cas  [1 4]
+INFO  jepsen.util - 1 :ok :write  0
+INFO  jepsen.util - 10  :invoke :read nil
+INFO  jepsen.util - 10  :ok :read 0
+INFO  jepsen.util - 8 :ok :write  4
+INFO  jepsen.util - 4 :fail :cas  [2 4]
+INFO  jepsen.util - 2 :fail :cas  [1 4]
+INFO  jepsen.util - 1 :invoke :write  1
+INFO  jepsen.util - 10  :invoke :read nil
+INFO  jepsen.util - 10  :ok :read 4
+INFO  jepsen.util - 8 :invoke :read nil
+INFO  jepsen.util - 4 :invoke :write  0
+INFO  jepsen.util - 8 :ok :read 4
+INFO  jepsen.util - 2 :invoke :cas  [1 3]
+INFO  jepsen.util - 1 :ok :write  1
+INFO  jepsen.util - 4 :ok :write  0
+INFO  jepsen.util - 2 :fail :cas  [1 3]
+INFO  jepsen.util - :nemesis  :info :stop nil
+INFO  jepsen.util - :nemesis  :info :stop "fully connected"
+INFO  jepsen.util - :nemesis  :info :stop nil
+INFO  jepsen.util - :nemesis  :info :stop "fully connected"
+INFO  jepsen.util - 10  :invoke :read nil
+INFO  jepsen.core - Worker 3 done
+INFO  jepsen.core - Worker 4 done
+INFO  jepsen.core - nemesis done
+INFO  jepsen.core - Worker 1 done
+INFO  jepsen.core - Worker 2 done
+INFO  jepsen.util - 10  :ok :read 0
+INFO  jepsen.core - Worker 0 done
+INFO  jepsen.core - Run complete, writing
+INFO  jepsen.core - Analyzing
+:world-size 2 :degenerate 2
+:world-size 2 :degenerate 2
+:world-size 5 :degenerate 4
+:world-size 16 :degenerate 11
+:world-size 27 :degenerate 18
+:world-size 14 :degenerate 14
+:world-size 8 :degenerate 8
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 2 :degenerate 2
+:world-size 3 :degenerate 3
+:world-size 5 :degenerate 5
+:world-size 11 :degenerate 9
+:world-size 33 :degenerate 17
+:world-size 131 :degenerate 33
+:world-size 16 :degenerate 16
+:world-size 8 :degenerate 8
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 1 :degenerate 1
+:world-size 2 :degenerate 2
+:world-size 8 :degenerate 8
+:world-size 21 :degenerate 16
+:world-size 70 :degenerate 32
+:world-size 16 :degenerate 16
+:world-size 8 :degenerate 8
+:world-size 18 :degenerate 8
+:world-size 6 :degenerate 6
+:world-size 4 :degenerate 4
+:world-size 4 :degenerate 4
+:world-size 8 :degenerate 6
+:world-size 20 :degenerate 10
+:world-size 64 :degenerate 24
+:world-size 260 :degenerate 60
+:world-size 32 :degenerate 32
+:world-size 294 :degenerate 64
+:world-size 36 :degenerate 36
+:world-size 22 :degenerate 22
+:world-size 12 :degenerate 12
+:world-size 6 :degenerate 6
+:world-size 8 :degenerate 8
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 4 :degenerate 4
+:world-size 10 :degenerate 8
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 5 :degenerate 5
+:world-size 11 :degenerate 10
+:world-size 5 :degenerate 5
+:world-size 5 :degenerate 5
+:world-size 3 :degenerate 3
+:world-size 4 :degenerate 4
+:world-size 4 :degenerate 4
+:world-size 3 :degenerate 3
+:world-size 6 :degenerate 6
+:world-size 3 :degenerate 3
+:world-size 6 :degenerate 6
+:world-size 3 :degenerate 3
+:world-size 6 :degenerate 6
+:world-size 3 :degenerate 3
+:world-size 6 :degenerate 5
+:world-size 9 :degenerate 7
+:world-size 4 :degenerate 4
+:world-size 9 :degenerate 8
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 2 :degenerate 2
+:world-size 4 :degenerate 4
+:world-size 10 :degenerate 10
+:world-size 6 :degenerate 6
+:world-size 14 :degenerate 12
+:world-size 8 :degenerate 8
+:world-size 31 :degenerate 16
+:world-size 16 :degenerate 16
+:world-size 9 :degenerate 9
+:world-size 5 :degenerate 5
+:world-size 8 :degenerate 6
+:world-size 8 :degenerate 6
+:world-size 0 :degenerate 0
+INFO  jepsen.core - Analysis complete
+INFO  jepsen.system.etcd - :n4 etcd nuked
+INFO  jepsen.system.etcd - :n5 etcd nuked
+INFO  jepsen.system.etcd - :n3 etcd nuked
+INFO  jepsen.system.etcd - :n1 etcd nuked
+INFO  jepsen.system.etcd - :n2 etcd nuked
+
+FAIL in (register-test) (etcd_test.clj:45)
+expected: (:valid? (:results test))
+  actual: false
+
+Not linearizable. Linearizable prefix was:
+3 :invoke :write  1
+0 :invoke :cas  [4 1]
+2 :invoke :write  1
+1 :invoke :write  2
+4 :invoke :cas  [2 2]
+1 :ok :write  2
+3 :ok :write  1
+4 :ok :cas  [2 2]
+2 :ok :write  1
+0 :info :cas  "indeterminate: clj-http: status 404 {:orig-content-encoding nil, :trace-redirects [\"http://n1:4001/v2/keys/jepsen\"], :request-time 548, :status 404, :headers {\"Connection\" \"close\", \"Content-Length\" \"72\", \"Date\" \"Tue, 15 Apr 2014 04:02:33 GMT\", \"X-Etcd-Index\" \"5\", \"Content-Type\" \"text/plain; charset=utf-8\"}, :body {:errorCode 100, :message \"Key not found\", :cause \"/jepsen\", :index 5}}"
+3 :invoke :read 1
+2 :invoke :cas  [1 2]
+1 :invoke :read 1
+4 :invoke :read 1
+5 :invoke :read 1
+3 :ok :read 1
+1 :ok :read 1
+4 :ok :read 1
+5 :ok :read 1
+2 :ok :cas  [1 2]
+1 :invoke :write  2
+4 :invoke :write  4
+3 :invoke :read 2
+5 :invoke :read 2
+5 :ok :read 2
+3 :ok :read 2
+2 :invoke :cas  [3 2]
+4 :ok :write  4
+1 :ok :write  2
+2 :fail :cas  [3 2]
+5 :invoke :write  3
+3 :invoke :write  3
+1 :invoke :write  2
+4 :invoke :write  1
+5 :ok :write  3
+2 :invoke :write  1
+3 :ok :write  3
+1 :ok :write  2
+4 :ok :write  1
+2 :ok :write  1
+5 :invoke :read 1
+5 :ok :read 1
+3 :invoke :read 1
+3 :ok :read 1
+4 :invoke :read 1
+2 :invoke :cas  [3 4]
+1 :invoke :write  1
+4 :ok :read 1
+1 :ok :write  1
+2 :fail :cas  [3 4]
+5 :invoke :read 1
+5 :ok :read 1
+3 :invoke :read 1
+3 :ok :read 1
+4 :invoke :read 1
+4 :ok :read 1
+1 :invoke :write  4
+2 :invoke :read 1
+2 :ok :read 1
+5 :invoke :cas  [3 4]
+1 :ok :write  4
+3 :invoke :cas  [1 0]
+5 :fail :cas  [3 4]
+3 :fail :cas  [1 0]
+4 :invoke :read 4
+4 :ok :read 4
+2 :invoke :read 4
+2 :ok :read 4
+1 :invoke :read 4
+1 :ok :read 4
+5 :invoke :write  2
+3 :invoke :cas  [2 1]
+5 :ok :write  2
+4 :invoke :read 2
+4 :ok :read 2
+3 :ok :cas  [2 1]
+2 :invoke :write  0
+:nemesis  :info :start  nil
+2 :ok :write  0
+1 :invoke :write  3
+1 :ok :write  3
+5 :invoke :read 3
+5 :ok :read 3
+4 :invoke :write  3
+3 :invoke :write  2
+4 :ok :write  3
+2 :invoke :write  0
+3 :ok :write  2
+1 :invoke :write  4
+:nemesis  :info :start  "crashed: java.util.concurrent.ExecutionException: com.jcraft.jsch.JSchException: Packet corrupt"
+2 :ok :write  0
+1 :ok :write  4
+5 :invoke :cas  [1 3]
+4 :invoke :read 2
+
+Followed by inconsistent operation:
+4 :ok :read 2
+
+Last consistent worlds were: ----------------
+World with fixed history:
+1 :invoke :write  2
+4 :invoke :cas  [2 2]
+2 :invoke :write  1
+3 :invoke :write  1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :read 1
+5 :invoke :read 1
+2 :invoke :cas  [1 2]
+3 :invoke :read 2
+5 :invoke :read 2
+1 :invoke :write  2
+4 :invoke :write  4
+1 :invoke :write  2
+5 :invoke :write  3
+3 :invoke :write  3
+4 :invoke :write  1
+2 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+2 :invoke :read 1
+1 :invoke :write  4
+4 :invoke :read 4
+2 :invoke :read 4
+1 :invoke :read 4
+5 :invoke :write  2
+4 :invoke :read 2
+3 :invoke :cas  [2 1]
+2 :invoke :write  0
+1 :invoke :write  3
+5 :invoke :read 3
+4 :invoke :write  3
+3 :invoke :write  2
+2 :invoke :write  0
+1 :invoke :write  4
+led to current state: 
+{:value 4}
+with pending operations:
+0 :invoke :cas  [4 1]
+4 :invoke :read 2
+5 :invoke :cas  [1 3]
+
+World with fixed history:
+1 :invoke :write  2
+4 :invoke :cas  [2 2]
+2 :invoke :write  1
+3 :invoke :write  1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :read 1
+5 :invoke :read 1
+2 :invoke :cas  [1 2]
+3 :invoke :read 2
+5 :invoke :read 2
+1 :invoke :write  2
+4 :invoke :write  4
+1 :invoke :write  2
+5 :invoke :write  3
+3 :invoke :write  3
+4 :invoke :write  1
+2 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+2 :invoke :read 1
+1 :invoke :write  4
+4 :invoke :read 4
+2 :invoke :read 4
+1 :invoke :read 4
+5 :invoke :write  2
+4 :invoke :read 2
+3 :invoke :cas  [2 1]
+2 :invoke :write  0
+1 :invoke :write  3
+5 :invoke :read 3
+3 :invoke :write  2
+4 :invoke :write  3
+1 :invoke :write  4
+2 :invoke :write  0
+led to current state: 
+{:value 0}
+with pending operations:
+0 :invoke :cas  [4 1]
+4 :invoke :read 2
+5 :invoke :cas  [1 3]
+
+World with fixed history:
+1 :invoke :write  2
+4 :invoke :cas  [2 2]
+2 :invoke :write  1
+3 :invoke :write  1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :read 1
+5 :invoke :read 1
+2 :invoke :cas  [1 2]
+3 :invoke :read 2
+5 :invoke :read 2
+1 :invoke :write  2
+4 :invoke :write  4
+0 :invoke :cas  [4 1]
+5 :invoke :write  3
+2 :invoke :write  1
+3 :invoke :write  3
+1 :invoke :write  2
+4 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+1 :invoke :write  1
+4 :invoke :read 1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+2 :invoke :read 1
+1 :invoke :write  4
+4 :invoke :read 4
+2 :invoke :read 4
+1 :invoke :read 4
+5 :invoke :write  2
+4 :invoke :read 2
+3 :invoke :cas  [2 1]
+2 :invoke :write  0
+1 :invoke :write  3
+5 :invoke :read 3
+3 :invoke :write  2
+4 :invoke :write  3
+2 :invoke :write  0
+1 :invoke :write  4
+led to current state: 
+{:value 4}
+with pending operations:
+4 :invoke :read 2
+5 :invoke :cas  [1 3]
+
+World with fixed history:
+1 :invoke :write  2
+4 :invoke :cas  [2 2]
+2 :invoke :write  1
+3 :invoke :write  1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :read 1
+5 :invoke :read 1
+2 :invoke :cas  [1 2]
+3 :invoke :read 2
+5 :invoke :read 2
+1 :invoke :write  2
+4 :invoke :write  4
+1 :invoke :write  2
+5 :invoke :write  3
+3 :invoke :write  3
+4 :invoke :write  1
+2 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+2 :invoke :read 1
+1 :invoke :write  4
+4 :invoke :read 4
+2 :invoke :read 4
+1 :invoke :read 4
+5 :invoke :write  2
+4 :invoke :read 2
+3 :invoke :cas  [2 1]
+2 :invoke :write  0
+1 :invoke :write  3
+5 :invoke :read 3
+4 :invoke :write  3
+3 :invoke :write  2
+2 :invoke :write  0
+1 :invoke :write  4
+0 :invoke :cas  [4 1]
+5 :invoke :cas  [1 3]
+led to current state: 
+{:value 3}
+with pending operations:
+4 :invoke :read 2
+
+World with fixed history:
+1 :invoke :write  2
+4 :invoke :cas  [2 2]
+2 :invoke :write  1
+3 :invoke :write  1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :read 1
+5 :invoke :read 1
+2 :invoke :cas  [1 2]
+3 :invoke :read 2
+5 :invoke :read 2
+1 :invoke :write  2
+4 :invoke :write  4
+1 :invoke :write  2
+5 :invoke :write  3
+3 :invoke :write  3
+4 :invoke :write  1
+2 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+2 :invoke :read 1
+1 :invoke :write  4
+4 :invoke :read 4
+2 :invoke :read 4
+1 :invoke :read 4
+5 :invoke :write  2
+4 :invoke :read 2
+3 :invoke :cas  [2 1]
+2 :invoke :write  0
+1 :invoke :write  3
+5 :invoke :read 3
+3 :invoke :write  2
+4 :invoke :write  3
+2 :invoke :write  0
+1 :invoke :write  4
+0 :invoke :cas  [4 1]
+led to current state: 
+{:value 1}
+with pending operations:
+4 :invoke :read 2
+5 :invoke :cas  [1 3]
+
+World with fixed history:
+1 :invoke :write  2
+4 :invoke :cas  [2 2]
+2 :invoke :write  1
+3 :invoke :write  1
+3 :invoke :read 1
+4 :invoke :read 1
+1 :invoke :read 1
+5 :invoke :read 1
+2 :invoke :cas  [1 2]
+3 :invoke :read 2
+5 :invoke :read 2
+1 :invoke :write  2
+4 :invoke :write  4
+0 :invoke :cas  [4 1]
+5 :invoke :write  3
+2 :invoke :write  1
+3 :invoke :write  3
+1 :invoke :write  2
+4 :invoke :write  1
+5 :invoke :read 1
+3 :invoke :read 1
+1 :invoke :write  1
+4 :invoke :read 1
+5 :invoke :read 1
+3 :invoke :read 1
+4 :invoke :read 1
+2 :invoke :read 1
+1 :invoke :write  4
+4 :invoke :read 4
+2 :invoke :read 4
+1 :invoke :read 4
+5 :invoke :write  2
+4 :invoke :read 2
+3 :invoke :cas  [2 1]
+2 :invoke :write  0
+1 :invoke :write  3
+5 :invoke :read 3
+4 :invoke :write  3
+3 :invoke :write  2
+1 :invoke :write  4
+2 :invoke :write  0
+led to current state: 
+{:value 0}
+with pending operations:
+4 :invoke :read 2
+5 :invoke :cas  [1 3]
+
+---------------------------------------------
+
+Inconsistent state transitions:
+([{:value 4} "can't read 2 from register 4"]
+ [{:value 0} "can't read 2 from register 0"]
+ [{:value 4} "can't read 2 from register 4"]
+ [{:value 3} "can't read 2 from register 3"]
+ [{:value 1} "can't read 2 from register 1"]
+ [{:value 0} "can't read 2 from register 0"])
+
