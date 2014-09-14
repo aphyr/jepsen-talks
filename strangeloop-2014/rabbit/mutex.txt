@@ -1,0 +1,77 @@
+=ERROR REPORT==== 10-Apr-2014::13:16:08 ===
+** Node rabbit@n3 not responding **
+** Removing (timedout) connection **
+
+=INFO REPORT==== 10-Apr-2014::13:16:29 ===
+rabbit on node rabbit@n5 down
+
+=ERROR REPORT==== 10-Apr-2014::13:16:45 ===
+Mnesia(rabbit@n1): ** ERROR ** mnesia_event got {inconsistent_database, running_partitioned_network, rabbit@n3}
+
+
+Not linearizable. Linearizable prefix was:
+:nemesis  :info :start  nil
+:nemesis  :info :start  "partitioned into [(:n4 :n5) (:n1 :n3 :n2)]"
+:nemesis  :info :stop nil
+:nemesis  :info :stop "fully connected"
+:nemesis  :info :start  nil
+:nemesis  :info :start  "partitioned into [(:n1 :n5) (:n4 :n2 :n3)]"
+1 :invoke :acquire  1
+3 :invoke :acquire  nil
+0 :invoke :acquire  nil
+2 :invoke :acquire  nil
+4 :invoke :acquire  nil
+3 :fail :acquire  nil
+2 :fail :acquire  nil
+1 :ok :acquire  1
+:nemesis  :info :stop nil
+4 :info :acquire  "indeterminate: channel error; reason: {#method<channel.close>(reply-code=404, reply-text=NOT_FOUND - home node 'rabbit@n2' of durable queue 'jepsen.semaphore' in vhost '/' is down or inaccessible, class-id=60, method-id=70), null, \"\"}"
+:nemesis  :info :stop "fully connected"
+0 :info :acquire  "indeterminate: channel error; reason: {#method<channel.close>(reply-code=404, reply-text=NOT_FOUND - home node 'rabbit@n2' of durable queue 'jepsen.semaphore' in vhost '/' is down or inaccessible, class-id=60, method-id=70), null, \"\"}"
+:nemesis  :info :start  nil
+:nemesis  :info :start  "partitioned into [(:n2 :n4) (:n1 :n5 :n3)]"
+:nemesis  :info :stop nil
+:nemesis  :info :stop "fully connected"
+:nemesis  :info :start  nil
+:nemesis  :info :start  "partitioned into [(:n3 :n2) (:n1 :n5 :n4)]"
+3 :invoke :release  :not-held
+2 :invoke :release  :not-held
+3 :fail :release  :not-held
+2 :fail :release  :not-held
+1 :invoke :release  nil
+1 :ok :release  nil
+9 :invoke :acquire  "clean connection shutdown; reason: Attempt to use closed channel"
+9 :fail :acquire  "clean connection shutdown; reason: Attempt to use closed channel"
+5 :invoke :acquire  "clean connection shutdown; reason: Attempt to use closed channel"
+5 :fail :acquire  "clean connection shutdown; reason: Attempt to use closed channel"
+:nemesis  :info :stop nil
+:nemesis  :info :stop "fully connected"
+:nemesis  :info :start  nil
+:nemesis  :info :start  "partitioned into [(:n1 :n4) (:n3 :n5 :n2)]"
+3 :invoke :acquire  nil
+2 :invoke :acquire  1
+2 :ok :acquire  1
+1 :invoke :acquire  2
+
+Followed by inconsistent operation:
+1 :ok :acquire  2
+
+Last consistent worlds were: ----------------
+
+World from fixed history:
+1 :invoke :acquire  1
+1 :invoke :release  nil
+2 :invoke :acquire  1
+and current state  #jepsen.model.Mutex{:locked true}
+with pending operations:
+3 :invoke :acquire  nil
+1 :invoke :acquire  2
+0 :invoke :acquire  nil
+4 :invoke :acquire  nil
+---------------------------------------------
+
+Inconsistent state transitions:
+([{:locked true} "already held"])
+
+Ran 1 tests containing 1 assertions.
+1 failures, 0 errors.
