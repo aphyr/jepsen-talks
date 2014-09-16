@@ -1,0 +1,1045 @@
+(deftest create-test
+  (let [test (run!
+               (assoc
+                 noop-test
+                 :name      "elasticsearch"
+                 :os        debian/os
+                 :db        db
+                 :client    (create-set-client)
+                 :model     (model/set)
+                 :checker   (checker/compose {:html timeline/html
+                                              :set  checker/set})
+                 :nemesis   (nemesis/partition-halves)
+                 :generator (gen/phases
+                              (->> (range)
+                                   (map (fn [x] {:type  :invoke
+                                                 :f     :add
+                                                 :value x}))
+                                   gen/seq
+                                   (gen/stagger 1/10)
+                                   (gen/delay 1)
+                                   (gen/nemesis
+                                     (gen/seq 
+                                       (cycle [(gen/sleep 0)
+                                               {:type :info :f :start}
+                                               (gen/sleep 200) 
+                                               {:type :info :f :stop}])))
+                                   (gen/time-limit 300))
+                              (gen/nemesis
+                                (gen/once {:type :info :f :stop}))
+                              (gen/clients
+                                (gen/once {:type :invoke :f :read})))))]
+    (is (:valid? (:results test)))
+    (pprint (:results test))))
+
+
+Testing jepsen.system.elasticsearch-test
+INFO  jepsen.os.debian - :n2 setting up debian
+INFO  jepsen.os.debian - :n4 setting up debian
+INFO  jepsen.os.debian - :n5 setting up debian
+INFO  jepsen.os.debian - :n1 setting up debian
+INFO  jepsen.os.debian - :n3 setting up debian
+INFO  jepsen.os.debian - :n4 debian set up
+INFO  jepsen.os.debian - :n5 debian set up
+INFO  jepsen.os.debian - :n1 debian set up
+INFO  jepsen.os.debian - :n3 debian set up
+INFO  jepsen.os.debian - :n2 debian set up
+INFO  jepsen.system.elasticsearch - :n3 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n4 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n5 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n2 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n1 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n1 configuring elasticsearch
+INFO  jepsen.system.elasticsearch - :n3 configuring elasticsearch
+INFO  jepsen.system.elasticsearch - :n5 configuring elasticsearch
+INFO  jepsen.system.elasticsearch - :n4 configuring elasticsearch
+INFO  jepsen.system.elasticsearch - :n2 configuring elasticsearch
+INFO  jepsen.system.elasticsearch - :n2 starting elasticsearch
+INFO  jepsen.system.elasticsearch - :n4 starting elasticsearch
+INFO  jepsen.system.elasticsearch - :n5 starting elasticsearch
+INFO  jepsen.system.elasticsearch - :n3 starting elasticsearch
+INFO  jepsen.system.elasticsearch - :n1 starting elasticsearch
+INFO  jepsen.system.elasticsearch - :n4 elasticsearch ready
+INFO  jepsen.system.elasticsearch - :n5 elasticsearch ready
+INFO  jepsen.system.elasticsearch - :n3 elasticsearch ready
+INFO  jepsen.system.elasticsearch - :n1 elasticsearch ready
+INFO  jepsen.system.elasticsearch - :n2 elasticsearch ready
+INFO  jepsen.core - Worker 2 starting
+INFO  jepsen.core - Worker 0 starting
+INFO  jepsen.core - Worker 1 starting
+INFO  jepsen.core - Worker 3 starting
+INFO  jepsen.core - Worker 4 starting
+INFO  jepsen.util - :nemesis  :info :start  nil
+INFO  jepsen.util - 0 :invoke :add  0
+INFO  jepsen.util - 4 :invoke :add  1
+INFO  jepsen.util - 3 :invoke :add  2
+INFO  jepsen.util - 0 :ok :add  0
+INFO  jepsen.util - 3 :ok :add  2
+INFO  jepsen.util - 4 :ok :add  1
+INFO  jepsen.util - 2 :invoke :add  3
+INFO  jepsen.util - 1 :invoke :add  4
+INFO  jepsen.util - 2 :ok :add  3
+INFO  jepsen.util - 1 :ok :add  4
+INFO  jepsen.util - :nemesis  :info :start  "Cut off {:n5 #{:n2 :n1}, :n4 #{:n2 :n1}, :n3 #{:n2 :n1}, :n1 #{:n3 :n4 :n5}, :n2 #{:n3 :n4 :n5}}"
+INFO  jepsen.util - 3 :invoke :add  5
+INFO  jepsen.util - 4 :invoke :add  6
+INFO  jepsen.util - 0 :invoke :add  7
+INFO  jepsen.util - 2 :invoke :add  8
+INFO  jepsen.util - 1 :invoke :add  9
+INFO  jepsen.util - 3 :info :add  :timed-out
+INFO  jepsen.util - 4 :info :add  :timed-out
+INFO  jepsen.util - 0 :info :add  :timed-out
+INFO  jepsen.util - 2 :info :add  :timed-out
+INFO  jepsen.util - 1 :info :add  :timed-out
+INFO  jepsen.util - 8 :invoke :add  10
+INFO  jepsen.util - 5 :invoke :add  11
+INFO  jepsen.util - 9 :invoke :add  12
+INFO  jepsen.util - 6 :invoke :add  13
+INFO  jepsen.util - 7 :invoke :add  14
+INFO  jepsen.util - 8 :info :add  :timed-out
+INFO  jepsen.util - 5 :info :add  :timed-out
+INFO  jepsen.util - 9 :info :add  :timed-out
+INFO  jepsen.util - 6 :info :add  :timed-out
+INFO  jepsen.util - 7 :info :add  :timed-out
+INFO  jepsen.util - 13  :invoke :add  15
+INFO  jepsen.util - 10  :invoke :add  16
+INFO  jepsen.util - 14  :invoke :add  17
+INFO  jepsen.util - 11  :invoke :add  18
+INFO  jepsen.util - 12  :invoke :add  19
+INFO  jepsen.util - 13  :info :add  :timed-out
+INFO  jepsen.util - 10  :info :add  :timed-out
+INFO  jepsen.util - 14  :info :add  :timed-out
+INFO  jepsen.util - 11  :info :add  :timed-out
+INFO  jepsen.util - 12  :info :add  :timed-out
+INFO  jepsen.util - 18  :invoke :add  20
+INFO  jepsen.util - 15  :invoke :add  21
+INFO  jepsen.util - 16  :invoke :add  22
+INFO  jepsen.util - 19  :invoke :add  23
+INFO  jepsen.util - 17  :invoke :add  24
+INFO  jepsen.util - 18  :info :add  :timed-out
+INFO  jepsen.util - 15  :info :add  :timed-out
+INFO  jepsen.util - 16  :info :add  :timed-out
+INFO  jepsen.util - 19  :info :add  :timed-out
+INFO  jepsen.util - 17  :info :add  :timed-out
+INFO  jepsen.util - 20  :invoke :add  25
+INFO  jepsen.util - 23  :invoke :add  26
+INFO  jepsen.util - 24  :invoke :add  27
+INFO  jepsen.util - 21  :invoke :add  28
+INFO  jepsen.util - 22  :invoke :add  29
+INFO  jepsen.util - 20  :info :add  :timed-out
+INFO  jepsen.util - 23  :info :add  :timed-out
+INFO  jepsen.util - 24  :info :add  :timed-out
+INFO  jepsen.util - 21  :info :add  :timed-out
+INFO  jepsen.util - 22  :info :add  :timed-out
+INFO  jepsen.util - 25  :invoke :add  30
+INFO  jepsen.util - 28  :invoke :add  31
+INFO  jepsen.util - 26  :invoke :add  32
+INFO  jepsen.util - 29  :invoke :add  33
+INFO  jepsen.util - 27  :invoke :add  34
+INFO  jepsen.util - 25  :info :add  :timed-out
+INFO  jepsen.util - 28  :info :add  :timed-out
+INFO  jepsen.util - 26  :info :add  :timed-out
+INFO  jepsen.util - 29  :info :add  :timed-out
+INFO  jepsen.util - 27  :info :add  :timed-out
+INFO  jepsen.util - 30  :invoke :add  35
+INFO  jepsen.util - 33  :invoke :add  36
+INFO  jepsen.util - 31  :invoke :add  37
+INFO  jepsen.util - 34  :invoke :add  38
+INFO  jepsen.util - 32  :invoke :add  39
+INFO  jepsen.util - 30  :info :add  :timed-out
+INFO  jepsen.util - 33  :info :add  :timed-out
+INFO  jepsen.util - 31  :info :add  :timed-out
+INFO  jepsen.util - 34  :info :add  :timed-out
+INFO  jepsen.util - 32  :info :add  :timed-out
+INFO  jepsen.util - 38  :invoke :add  40
+INFO  jepsen.util - 35  :invoke :add  41
+INFO  jepsen.util - 36  :invoke :add  42
+INFO  jepsen.util - 39  :invoke :add  43
+INFO  jepsen.util - 37  :invoke :add  44
+INFO  jepsen.util - 38  :info :add  :timed-out
+INFO  jepsen.util - 35  :info :add  :timed-out
+INFO  jepsen.util - 36  :info :add  :timed-out
+INFO  jepsen.util - 39  :info :add  :timed-out
+INFO  jepsen.util - 37  :info :add  :timed-out
+INFO  jepsen.util - 43  :invoke :add  45
+INFO  jepsen.util - 40  :invoke :add  46
+INFO  jepsen.util - 44  :invoke :add  47
+INFO  jepsen.util - 41  :invoke :add  48
+INFO  jepsen.util - 42  :invoke :add  49
+INFO  jepsen.util - 43  :info :add  :timed-out
+INFO  jepsen.util - 40  :info :add  :timed-out
+INFO  jepsen.util - 44  :info :add  :timed-out
+INFO  jepsen.util - 41  :info :add  :timed-out
+INFO  jepsen.util - 42  :info :add  :timed-out
+INFO  jepsen.util - 48  :invoke :add  50
+INFO  jepsen.util - 45  :invoke :add  51
+INFO  jepsen.util - 46  :invoke :add  52
+INFO  jepsen.util - 49  :invoke :add  53
+INFO  jepsen.util - 47  :invoke :add  54
+INFO  jepsen.util - 48  :info :add  :timed-out
+INFO  jepsen.util - 45  :info :add  :timed-out
+INFO  jepsen.util - 46  :info :add  :timed-out
+INFO  jepsen.util - 49  :info :add  :timed-out
+INFO  jepsen.util - 47  :info :add  :timed-out
+INFO  jepsen.util - 53  :invoke :add  55
+INFO  jepsen.util - 50  :invoke :add  56
+INFO  jepsen.util - 51  :invoke :add  57
+INFO  jepsen.util - 54  :invoke :add  58
+INFO  jepsen.util - 52  :invoke :add  59
+INFO  jepsen.util - 53  :info :add  :timed-out
+INFO  jepsen.util - 50  :info :add  :timed-out
+INFO  jepsen.util - 51  :info :add  :timed-out
+INFO  jepsen.util - 54  :info :add  :timed-out
+INFO  jepsen.util - 52  :info :add  :timed-out
+INFO  jepsen.util - 55  :invoke :add  60
+INFO  jepsen.util - 58  :invoke :add  61
+INFO  jepsen.util - 56  :invoke :add  62
+INFO  jepsen.util - 59  :invoke :add  63
+INFO  jepsen.util - 57  :invoke :add  64
+INFO  jepsen.util - 55  :info :add  :timed-out
+INFO  jepsen.util - 58  :info :add  :timed-out
+INFO  jepsen.util - 56  :info :add  :timed-out
+INFO  jepsen.util - 59  :info :add  :timed-out
+INFO  jepsen.util - 57  :info :add  :timed-out
+INFO  jepsen.util - 60  :invoke :add  65
+INFO  jepsen.util - 63  :invoke :add  66
+INFO  jepsen.util - 61  :invoke :add  67
+INFO  jepsen.util - 64  :invoke :add  68
+INFO  jepsen.util - 62  :invoke :add  69
+INFO  jepsen.util - 60  :info :add  :timed-out
+INFO  jepsen.util - 63  :info :add  :timed-out
+INFO  jepsen.util - 61  :info :add  :timed-out
+INFO  jepsen.util - 64  :info :add  :timed-out
+INFO  jepsen.util - 62  :info :add  :timed-out
+INFO  jepsen.util - 65  :invoke :add  70
+INFO  jepsen.util - 68  :invoke :add  71
+INFO  jepsen.util - 69  :invoke :add  72
+INFO  jepsen.util - 66  :invoke :add  73
+INFO  jepsen.util - 67  :invoke :add  74
+INFO  jepsen.util - 65  :info :add  :timed-out
+INFO  jepsen.util - 68  :info :add  :timed-out
+INFO  jepsen.util - 69  :info :add  :timed-out
+INFO  jepsen.util - 66  :info :add  :timed-out
+INFO  jepsen.util - 67  :info :add  :timed-out
+INFO  jepsen.util - 70  :invoke :add  75
+INFO  jepsen.util - 73  :invoke :add  76
+INFO  jepsen.util - 74  :invoke :add  77
+INFO  jepsen.util - 71  :invoke :add  78
+INFO  jepsen.util - 72  :invoke :add  79
+INFO  jepsen.util - 70  :info :add  :timed-out
+INFO  jepsen.util - 73  :info :add  :timed-out
+INFO  jepsen.util - 74  :info :add  :timed-out
+INFO  jepsen.util - 71  :info :add  :timed-out
+INFO  jepsen.util - 72  :info :add  :timed-out
+INFO  jepsen.util - 75  :invoke :add  80
+INFO  jepsen.util - 78  :invoke :add  81
+INFO  jepsen.util - 76  :invoke :add  82
+INFO  jepsen.util - 79  :invoke :add  83
+INFO  jepsen.util - 77  :invoke :add  84
+INFO  jepsen.util - 75  :info :add  :timed-out
+INFO  jepsen.util - 78  :info :add  :timed-out
+INFO  jepsen.util - 76  :info :add  :timed-out
+INFO  jepsen.util - 79  :info :add  :timed-out
+INFO  jepsen.util - 77  :info :add  :timed-out
+INFO  jepsen.util - 80  :invoke :add  85
+INFO  jepsen.util - 83  :invoke :add  86
+INFO  jepsen.util - 84  :invoke :add  87
+INFO  jepsen.util - 81  :invoke :add  88
+INFO  jepsen.util - 82  :invoke :add  89
+INFO  jepsen.util - 80  :info :add  :timed-out
+INFO  jepsen.util - 83  :info :add  :timed-out
+INFO  jepsen.util - 84  :info :add  :timed-out
+INFO  jepsen.util - 81  :info :add  :timed-out
+INFO  jepsen.util - 82  :info :add  :timed-out
+INFO  jepsen.util - 85  :invoke :add  90
+INFO  jepsen.util - 85  :ok :add  90
+INFO  jepsen.util - 88  :invoke :add  91
+INFO  jepsen.util - 89  :invoke :add  92
+INFO  jepsen.util - 86  :invoke :add  93
+INFO  jepsen.util - 85  :invoke :add  94
+INFO  jepsen.util - 85  :ok :add  94
+INFO  jepsen.util - 87  :invoke :add  95
+INFO  jepsen.util - 85  :invoke :add  96
+INFO  jepsen.util - 88  :info :add  :timed-out
+INFO  jepsen.util - 89  :info :add  :timed-out
+INFO  jepsen.util - 86  :info :add  :timed-out
+INFO  jepsen.util - 87  :info :add  :timed-out
+INFO  jepsen.util - 93  :invoke :add  97
+INFO  jepsen.util - 91  :invoke :add  98
+INFO  jepsen.util - 94  :invoke :add  99
+INFO  jepsen.util - 85  :info :add  :timed-out
+INFO  jepsen.util - 92  :invoke :add  100
+INFO  jepsen.util - 90  :invoke :add  101
+INFO  jepsen.util - 93  :info :add  :timed-out
+INFO  jepsen.util - 91  :info :add  :timed-out
+INFO  jepsen.util - 94  :info :add  :timed-out
+INFO  jepsen.util - 92  :info :add  :timed-out
+INFO  jepsen.util - 98  :invoke :add  102
+INFO  jepsen.util - 99  :invoke :add  103
+INFO  jepsen.util - 96  :invoke :add  104
+INFO  jepsen.util - 96  :ok :add  104
+INFO  jepsen.util - 97  :invoke :add  105
+INFO  jepsen.util - 90  :info :add  :timed-out
+INFO  jepsen.util - 96  :invoke :add  106
+INFO  jepsen.util - 95  :invoke :add  107
+INFO  jepsen.util - 95  :ok :add  107
+INFO  jepsen.util - 95  :invoke :add  108
+INFO  jepsen.util - 98  :info :add  :timed-out
+INFO  jepsen.util - 99  :info :add  :timed-out
+INFO  jepsen.util - 97  :info :add  :timed-out
+INFO  jepsen.util - 103 :invoke :add  109
+INFO  jepsen.util - 104 :invoke :add  110
+INFO  jepsen.util - 96  :info :add  :timed-out
+INFO  jepsen.util - 102 :invoke :add  111
+INFO  jepsen.util - 101 :invoke :add  112
+INFO  jepsen.util - 95  :info :add  :timed-out
+INFO  jepsen.util - 100 :invoke :add  113
+INFO  jepsen.util - 103 :info :add  :timed-out
+INFO  jepsen.util - 104 :info :add  :timed-out
+INFO  jepsen.util - 102 :info :add  :timed-out
+INFO  jepsen.util - 108 :invoke :add  114
+INFO  jepsen.util - 109 :invoke :add  115
+INFO  jepsen.util - 101 :info :add  :timed-out
+INFO  jepsen.util - 107 :invoke :add  116
+INFO  jepsen.util - 106 :invoke :add  117
+INFO  jepsen.util - 100 :info :add  :timed-out
+INFO  jepsen.util - 105 :invoke :add  118
+INFO  jepsen.util - 108 :info :add  :timed-out
+INFO  jepsen.util - 109 :info :add  :timed-out
+INFO  jepsen.util - 107 :info :add  :timed-out
+INFO  jepsen.util - 114 :invoke :add  119
+INFO  jepsen.util - 113 :invoke :add  120
+INFO  jepsen.util - 106 :info :add  :timed-out
+INFO  jepsen.util - 112 :invoke :add  121
+INFO  jepsen.util - 111 :invoke :add  122
+INFO  jepsen.util - 111 :ok :add  122
+INFO  jepsen.util - 105 :info :add  :timed-out
+INFO  jepsen.util - 111 :invoke :add  123
+INFO  jepsen.util - 111 :ok :add  123
+INFO  jepsen.util - 110 :invoke :add  124
+INFO  jepsen.util - 111 :invoke :add  125
+INFO  jepsen.util - 114 :info :add  :timed-out
+INFO  jepsen.util - 113 :info :add  :timed-out
+INFO  jepsen.util - 112 :info :add  :timed-out
+INFO  jepsen.util - 119 :invoke :add  126
+INFO  jepsen.util - 118 :invoke :add  127
+INFO  jepsen.util - 117 :invoke :add  128
+INFO  jepsen.util - 110 :info :add  :timed-out
+INFO  jepsen.util - 111 :info :add  :timed-out
+INFO  jepsen.util - 115 :invoke :add  129
+INFO  jepsen.util - 116 :invoke :add  130
+INFO  jepsen.util - 119 :info :add  :timed-out
+INFO  jepsen.util - 118 :info :add  :timed-out
+INFO  jepsen.util - 117 :info :add  :timed-out
+INFO  jepsen.util - 124 :invoke :add  131
+INFO  jepsen.util - 123 :invoke :add  132
+INFO  jepsen.util - 122 :invoke :add  133
+INFO  jepsen.util - 115 :info :add  :timed-out
+INFO  jepsen.util - 116 :info :add  :timed-out
+INFO  jepsen.util - 120 :invoke :add  134
+INFO  jepsen.util - 121 :invoke :add  135
+INFO  jepsen.util - 121 :ok :add  135
+INFO  jepsen.util - 121 :invoke :add  136
+INFO  jepsen.util - 124 :info :add  :timed-out
+INFO  jepsen.util - 123 :info :add  :timed-out
+INFO  jepsen.util - 122 :info :add  :timed-out
+INFO  jepsen.util - 129 :invoke :add  137
+INFO  jepsen.util - 128 :invoke :add  138
+INFO  jepsen.util - 127 :invoke :add  139
+INFO  jepsen.util - 120 :info :add  :timed-out
+INFO  jepsen.util - 125 :invoke :add  140
+INFO  jepsen.util - 121 :info :add  :timed-out
+INFO  jepsen.util - 126 :invoke :add  141
+INFO  jepsen.util - 129 :info :add  :timed-out
+INFO  jepsen.util - 128 :info :add  :timed-out
+INFO  jepsen.util - 127 :info :add  :timed-out
+INFO  jepsen.util - 133 :invoke :add  142
+INFO  jepsen.util - 134 :invoke :add  143
+INFO  jepsen.util - 132 :invoke :add  144
+INFO  jepsen.util - 125 :info :add  :timed-out
+INFO  jepsen.util - 130 :invoke :add  145
+INFO  jepsen.util - 126 :info :add  :timed-out
+INFO  jepsen.util - 131 :invoke :add  146
+INFO  jepsen.util - 133 :info :add  :timed-out
+INFO  jepsen.util - 134 :info :add  :timed-out
+INFO  jepsen.util - 132 :info :add  :timed-out
+INFO  jepsen.util - 138 :invoke :add  147
+INFO  jepsen.util - 139 :invoke :add  148
+INFO  jepsen.util - 137 :invoke :add  149
+INFO  jepsen.util - 130 :info :add  :timed-out
+INFO  jepsen.util - 135 :invoke :add  150
+INFO  jepsen.util - 131 :info :add  :timed-out
+INFO  jepsen.util - 136 :invoke :add  151
+INFO  jepsen.util - 138 :info :add  :timed-out
+INFO  jepsen.util - 139 :info :add  :timed-out
+INFO  jepsen.util - 137 :info :add  :timed-out
+INFO  jepsen.util - 143 :invoke :add  152
+INFO  jepsen.util - 144 :invoke :add  153
+INFO  jepsen.util - 142 :invoke :add  154
+INFO  jepsen.util - 135 :info :add  :timed-out
+INFO  jepsen.util - 140 :invoke :add  155
+INFO  jepsen.util - 136 :info :add  :timed-out
+INFO  jepsen.util - 141 :invoke :add  156
+INFO  jepsen.util - 143 :info :add  :timed-out
+INFO  jepsen.util - 144 :info :add  :timed-out
+INFO  jepsen.util - 142 :info :add  :timed-out
+INFO  jepsen.util - 148 :invoke :add  157
+INFO  jepsen.util - 149 :invoke :add  158
+INFO  jepsen.util - 147 :invoke :add  159
+INFO  jepsen.util - 140 :info :add  :timed-out
+INFO  jepsen.util - 145 :invoke :add  160
+INFO  jepsen.util - 145 :ok :add  160
+INFO  jepsen.util - 141 :info :add  :timed-out
+INFO  jepsen.util - 145 :invoke :add  161
+INFO  jepsen.util - 146 :invoke :add  162
+INFO  jepsen.util - 148 :info :add  :timed-out
+INFO  jepsen.util - 149 :info :add  :timed-out
+INFO  jepsen.util - 147 :info :add  :timed-out
+INFO  jepsen.util - 153 :invoke :add  163
+INFO  jepsen.util - 154 :invoke :add  164
+INFO  jepsen.util - 152 :invoke :add  165
+INFO  jepsen.util - 145 :info :add  :timed-out
+INFO  jepsen.util - 146 :info :add  :timed-out
+INFO  jepsen.util - 150 :invoke :add  166
+INFO  jepsen.util - 151 :invoke :add  167
+INFO  jepsen.util - 153 :info :add  :timed-out
+INFO  jepsen.util - 154 :info :add  :timed-out
+INFO  jepsen.util - 152 :info :add  :timed-out
+INFO  jepsen.util - 159 :invoke :add  168
+INFO  jepsen.util - 158 :invoke :add  169
+INFO  jepsen.util - 157 :invoke :add  170
+INFO  jepsen.util - 157 :ok :add  170
+INFO  jepsen.util - 157 :invoke :add  171
+INFO  jepsen.util - 150 :info :add  :timed-out
+INFO  jepsen.util - 151 :info :add  :timed-out
+INFO  jepsen.util - 155 :invoke :add  172
+INFO  jepsen.util - 156 :invoke :add  173
+INFO  jepsen.util - 156 :ok :add  173
+INFO  jepsen.util - 159 :info :add  :timed-out
+INFO  jepsen.util - 158 :info :add  :timed-out
+INFO  jepsen.util - 156 :invoke :add  174
+INFO  jepsen.util - 163 :invoke :add  175
+INFO  jepsen.util - 163 :ok :add  175
+INFO  jepsen.util - 164 :invoke :add  176
+INFO  jepsen.util - 157 :info :add  :timed-out
+INFO  jepsen.util - 163 :invoke :add  177
+INFO  jepsen.util - 162 :invoke :add  178
+INFO  jepsen.util - 162 :ok :add  178
+INFO  jepsen.util - 162 :invoke :add  179
+INFO  jepsen.util - 155 :info :add  :timed-out
+INFO  jepsen.util - 160 :invoke :add  180
+INFO  jepsen.util - 156 :info :add  :timed-out
+INFO  jepsen.util - :nemesis  :info :stop nil
+INFO  jepsen.util - 164 :info :add  :timed-out
+INFO  jepsen.util - 161 :invoke :add  181
+INFO  jepsen.util - 161 :ok :add  181
+INFO  jepsen.util - :nemesis  :info :stop "fully connected"
+INFO  jepsen.util - :nemesis  :info :start  nil
+INFO  jepsen.util - 163 :info :add  :timed-out
+INFO  jepsen.util - 169 :invoke :add  182
+INFO  jepsen.util - 161 :invoke :add  183
+INFO  jepsen.util - 168 :invoke :add  184
+INFO  jepsen.util - :nemesis  :info :start  "Cut off {:n5 #{:n2 :n1}, :n4 #{:n2 :n1}, :n3 #{:n2 :n1}, :n1 #{:n3 :n4 :n5}, :n2 #{:n3 :n4 :n5}}"
+INFO  jepsen.util - 162 :info :add  :timed-out
+INFO  jepsen.util - 167 :invoke :add  185
+INFO  jepsen.util - 160 :info :add  :timed-out
+INFO  jepsen.util - 165 :invoke :add  186
+INFO  jepsen.util - 169 :info :add  :timed-out
+INFO  jepsen.util - 161 :info :add  :timed-out
+INFO  jepsen.util - 168 :info :add  :timed-out
+INFO  jepsen.util - 174 :invoke :add  187
+INFO  jepsen.util - 166 :invoke :add  188
+INFO  jepsen.util - 166 :ok :add  188
+INFO  jepsen.util - 173 :invoke :add  189
+INFO  jepsen.util - 166 :invoke :add  190
+INFO  jepsen.util - 167 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  191
+INFO  jepsen.util - 172 :ok :add  191
+INFO  jepsen.util - 165 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  192
+INFO  jepsen.util - 172 :ok :add  192
+INFO  jepsen.util - 170 :invoke :add  193
+INFO  jepsen.util - 174 :ok :add  187
+INFO  jepsen.util - 173 :ok :add  189
+INFO  jepsen.util - 172 :invoke :add  194
+INFO  jepsen.util - 172 :ok :add  194
+INFO  jepsen.util - 174 :invoke :add  195
+INFO  jepsen.util - 174 :ok :add  195
+INFO  jepsen.util - 173 :invoke :add  196
+INFO  jepsen.util - 173 :ok :add  196
+INFO  jepsen.util - 166 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  197
+INFO  jepsen.util - 172 :ok :add  197
+INFO  jepsen.util - 174 :invoke :add  198
+INFO  jepsen.util - 174 :ok :add  198
+INFO  jepsen.util - 173 :invoke :add  199
+INFO  jepsen.util - 173 :ok :add  199
+INFO  jepsen.util - 171 :invoke :add  200
+INFO  jepsen.util - 171 :ok :add  200
+INFO  jepsen.util - 172 :invoke :add  201
+INFO  jepsen.util - 172 :ok :add  201
+INFO  jepsen.util - 174 :invoke :add  202
+INFO  jepsen.util - 174 :ok :add  202
+INFO  jepsen.util - 173 :invoke :add  203
+INFO  jepsen.util - 173 :ok :add  203
+INFO  jepsen.util - 171 :invoke :add  204
+INFO  jepsen.util - 172 :invoke :add  205
+INFO  jepsen.util - 172 :ok :add  205
+INFO  jepsen.util - 174 :invoke :add  206
+INFO  jepsen.util - 174 :ok :add  206
+INFO  jepsen.util - 173 :invoke :add  207
+INFO  jepsen.util - 173 :ok :add  207
+INFO  jepsen.util - 170 :info :add  :timed-out
+INFO  jepsen.util - 174 :invoke :add  208
+INFO  jepsen.util - 174 :ok :add  208
+INFO  jepsen.util - 172 :invoke :add  209
+INFO  jepsen.util - 172 :ok :add  209
+INFO  jepsen.util - 173 :invoke :add  210
+INFO  jepsen.util - 173 :ok :add  210
+INFO  jepsen.util - 175 :invoke :add  211
+INFO  jepsen.util - 172 :invoke :add  212
+INFO  jepsen.util - 172 :ok :add  212
+INFO  jepsen.util - 174 :invoke :add  213
+INFO  jepsen.util - 174 :ok :add  213
+INFO  jepsen.util - 173 :invoke :add  214
+INFO  jepsen.util - 173 :ok :add  214
+INFO  jepsen.util - 172 :invoke :add  215
+INFO  jepsen.util - 172 :ok :add  215
+INFO  jepsen.util - 174 :invoke :add  216
+INFO  jepsen.util - 174 :ok :add  216
+INFO  jepsen.util - 173 :invoke :add  217
+INFO  jepsen.util - 173 :ok :add  217
+INFO  jepsen.util - 172 :invoke :add  218
+INFO  jepsen.util - 172 :ok :add  218
+INFO  jepsen.util - 174 :invoke :add  219
+INFO  jepsen.util - 174 :ok :add  219
+INFO  jepsen.util - 173 :invoke :add  220
+INFO  jepsen.util - 173 :ok :add  220
+INFO  jepsen.util - 171 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  221
+INFO  jepsen.util - 172 :ok :add  221
+INFO  jepsen.util - 174 :invoke :add  222
+INFO  jepsen.util - 174 :ok :add  222
+INFO  jepsen.util - 173 :invoke :add  223
+INFO  jepsen.util - 173 :ok :add  223
+INFO  jepsen.util - 176 :invoke :add  224
+INFO  jepsen.util - 172 :invoke :add  225
+INFO  jepsen.util - 172 :ok :add  225
+INFO  jepsen.util - 175 :info :add  :timed-out
+INFO  jepsen.util - 174 :invoke :add  226
+INFO  jepsen.util - 174 :ok :add  226
+INFO  jepsen.util - 173 :invoke :add  227
+INFO  jepsen.util - 173 :ok :add  227
+INFO  jepsen.util - 172 :invoke :add  228
+INFO  jepsen.util - 172 :ok :add  228
+INFO  jepsen.util - 180 :invoke :add  229
+INFO  jepsen.util - 180 :ok :add  229
+INFO  jepsen.util - 174 :invoke :add  230
+INFO  jepsen.util - 174 :ok :add  230
+INFO  jepsen.util - 173 :invoke :add  231
+INFO  jepsen.util - 173 :ok :add  231
+INFO  jepsen.util - 180 :invoke :add  232
+INFO  jepsen.util - 172 :invoke :add  233
+INFO  jepsen.util - 172 :ok :add  233
+INFO  jepsen.util - 174 :invoke :add  234
+INFO  jepsen.util - 174 :ok :add  234
+INFO  jepsen.util - 173 :invoke :add  235
+INFO  jepsen.util - 173 :ok :add  235
+INFO  jepsen.util - 172 :invoke :add  236
+INFO  jepsen.util - 172 :ok :add  236
+INFO  jepsen.util - 174 :invoke :add  237
+INFO  jepsen.util - 174 :ok :add  237
+INFO  jepsen.util - 173 :invoke :add  238
+INFO  jepsen.util - 173 :ok :add  238
+INFO  jepsen.util - 176 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  239
+INFO  jepsen.util - 172 :ok :add  239
+INFO  jepsen.util - 174 :invoke :add  240
+INFO  jepsen.util - 174 :ok :add  240
+INFO  jepsen.util - 173 :invoke :add  241
+INFO  jepsen.util - 173 :ok :add  241
+INFO  jepsen.util - 181 :invoke :add  242
+INFO  jepsen.util - 172 :invoke :add  243
+INFO  jepsen.util - 172 :ok :add  243
+INFO  jepsen.util - 174 :invoke :add  244
+INFO  jepsen.util - 174 :ok :add  244
+INFO  jepsen.util - 173 :invoke :add  245
+INFO  jepsen.util - 173 :ok :add  245
+INFO  jepsen.util - 172 :invoke :add  246
+INFO  jepsen.util - 172 :ok :add  246
+INFO  jepsen.util - 174 :invoke :add  247
+INFO  jepsen.util - 174 :ok :add  247
+INFO  jepsen.util - 173 :invoke :add  248
+INFO  jepsen.util - 173 :ok :add  248
+INFO  jepsen.util - 180 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  249
+INFO  jepsen.util - 172 :ok :add  249
+INFO  jepsen.util - 174 :invoke :add  250
+INFO  jepsen.util - 174 :ok :add  250
+INFO  jepsen.util - 173 :invoke :add  251
+INFO  jepsen.util - 173 :ok :add  251
+INFO  jepsen.util - 185 :invoke :add  252
+INFO  jepsen.util - 174 :invoke :add  253
+INFO  jepsen.util - 174 :ok :add  253
+INFO  jepsen.util - 172 :invoke :add  254
+INFO  jepsen.util - 172 :ok :add  254
+INFO  jepsen.util - 173 :invoke :add  255
+INFO  jepsen.util - 173 :ok :add  255
+INFO  jepsen.util - 174 :invoke :add  256
+INFO  jepsen.util - 172 :invoke :add  257
+INFO  jepsen.util - 174 :ok :add  256
+INFO  jepsen.util - 172 :ok :add  257
+INFO  jepsen.util - 173 :invoke :add  258
+INFO  jepsen.util - 173 :ok :add  258
+INFO  jepsen.util - 181 :info :add  :timed-out
+INFO  jepsen.util - 174 :invoke :add  259
+INFO  jepsen.util - 174 :ok :add  259
+INFO  jepsen.util - 172 :invoke :add  260
+INFO  jepsen.util - 172 :ok :add  260
+INFO  jepsen.util - 173 :invoke :add  261
+INFO  jepsen.util - 173 :ok :add  261
+INFO  jepsen.util - 186 :invoke :add  262
+INFO  jepsen.util - 172 :invoke :add  263
+INFO  jepsen.util - 174 :invoke :add  264
+INFO  jepsen.util - 172 :ok :add  263
+INFO  jepsen.util - 174 :ok :add  264
+INFO  jepsen.util - 173 :invoke :add  265
+INFO  jepsen.util - 173 :ok :add  265
+INFO  jepsen.util - 172 :invoke :add  266
+INFO  jepsen.util - 172 :ok :add  266
+INFO  jepsen.util - 185 :info :add  :timed-out
+INFO  jepsen.util - 174 :invoke :add  267
+INFO  jepsen.util - 174 :ok :add  267
+INFO  jepsen.util - 173 :invoke :add  268
+INFO  jepsen.util - 173 :ok :add  268
+INFO  jepsen.util - 172 :invoke :add  269
+INFO  jepsen.util - 172 :ok :add  269
+INFO  jepsen.util - 174 :invoke :add  270
+INFO  jepsen.util - 174 :ok :add  270
+INFO  jepsen.util - 190 :invoke :add  271
+INFO  jepsen.util - 173 :invoke :add  272
+INFO  jepsen.util - 173 :ok :add  272
+INFO  jepsen.util - 174 :invoke :add  273
+INFO  jepsen.util - 172 :invoke :add  274
+INFO  jepsen.util - 174 :ok :add  273
+INFO  jepsen.util - 172 :ok :add  274
+INFO  jepsen.util - 173 :invoke :add  275
+INFO  jepsen.util - 173 :ok :add  275
+INFO  jepsen.util - 186 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  276
+INFO  jepsen.util - 172 :ok :add  276
+INFO  jepsen.util - 174 :invoke :add  277
+INFO  jepsen.util - 174 :ok :add  277
+INFO  jepsen.util - 173 :invoke :add  278
+INFO  jepsen.util - 173 :ok :add  278
+INFO  jepsen.util - 191 :invoke :add  279
+INFO  jepsen.util - 191 :ok :add  279
+INFO  jepsen.util - 172 :invoke :add  280
+INFO  jepsen.util - 172 :ok :add  280
+INFO  jepsen.util - 174 :invoke :add  281
+INFO  jepsen.util - 174 :ok :add  281
+INFO  jepsen.util - 173 :invoke :add  282
+INFO  jepsen.util - 173 :ok :add  282
+INFO  jepsen.util - 191 :invoke :add  283
+INFO  jepsen.util - 172 :invoke :add  284
+INFO  jepsen.util - 172 :ok :add  284
+INFO  jepsen.util - 174 :invoke :add  285
+INFO  jepsen.util - 174 :ok :add  285
+INFO  jepsen.util - 173 :invoke :add  286
+INFO  jepsen.util - 173 :ok :add  286
+INFO  jepsen.util - 190 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  287
+INFO  jepsen.util - 172 :ok :add  287
+INFO  jepsen.util - 173 :invoke :add  288
+INFO  jepsen.util - 173 :ok :add  288
+INFO  jepsen.util - 174 :invoke :add  289
+INFO  jepsen.util - 174 :ok :add  289
+INFO  jepsen.util - 195 :invoke :add  290
+INFO  jepsen.util - 172 :invoke :add  291
+INFO  jepsen.util - 172 :ok :add  291
+INFO  jepsen.util - 173 :invoke :add  292
+INFO  jepsen.util - 173 :ok :add  292
+INFO  jepsen.util - 174 :invoke :add  293
+INFO  jepsen.util - 174 :ok :add  293
+INFO  jepsen.util - 173 :invoke :add  294
+INFO  jepsen.util - 173 :ok :add  294
+INFO  jepsen.util - 172 :invoke :add  295
+INFO  jepsen.util - 172 :ok :add  295
+INFO  jepsen.util - 174 :invoke :add  296
+INFO  jepsen.util - 174 :ok :add  296
+INFO  jepsen.util - 173 :invoke :add  297
+INFO  jepsen.util - 173 :ok :add  297
+INFO  jepsen.util - 172 :invoke :add  298
+INFO  jepsen.util - 172 :ok :add  298
+INFO  jepsen.util - 174 :invoke :add  299
+INFO  jepsen.util - 174 :ok :add  299
+INFO  jepsen.util - 191 :info :add  :timed-out
+INFO  jepsen.util - 173 :invoke :add  300
+INFO  jepsen.util - 173 :ok :add  300
+INFO  jepsen.util - 172 :invoke :add  301
+INFO  jepsen.util - 172 :ok :add  301
+INFO  jepsen.util - 196 :invoke :add  302
+INFO  jepsen.util - 174 :invoke :add  303
+INFO  jepsen.util - 174 :ok :add  303
+INFO  jepsen.util - 173 :invoke :add  304
+INFO  jepsen.util - 173 :ok :add  304
+INFO  jepsen.util - 195 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  305
+INFO  jepsen.util - 172 :ok :add  305
+INFO  jepsen.util - 174 :invoke :add  306
+INFO  jepsen.util - 174 :ok :add  306
+INFO  jepsen.util - 173 :invoke :add  307
+INFO  jepsen.util - 173 :ok :add  307
+INFO  jepsen.util - 200 :invoke :add  308
+INFO  jepsen.util - 172 :invoke :add  309
+INFO  jepsen.util - 172 :ok :add  309
+INFO  jepsen.util - 174 :invoke :add  310
+INFO  jepsen.util - 174 :ok :add  310
+INFO  jepsen.util - 173 :invoke :add  311
+INFO  jepsen.util - 173 :ok :add  311
+INFO  jepsen.util - 172 :invoke :add  312
+INFO  jepsen.util - 172 :ok :add  312
+INFO  jepsen.util - 174 :invoke :add  313
+INFO  jepsen.util - 174 :ok :add  313
+INFO  jepsen.util - 173 :invoke :add  314
+INFO  jepsen.util - 173 :ok :add  314
+INFO  jepsen.util - 172 :invoke :add  315
+INFO  jepsen.util - 172 :ok :add  315
+INFO  jepsen.util - 174 :invoke :add  316
+INFO  jepsen.util - 174 :ok :add  316
+INFO  jepsen.util - 196 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  317
+INFO  jepsen.util - 172 :ok :add  317
+INFO  jepsen.util - 173 :invoke :add  318
+INFO  jepsen.util - 173 :ok :add  318
+INFO  jepsen.util - 174 :invoke :add  319
+INFO  jepsen.util - 174 :ok :add  319
+INFO  jepsen.util - 201 :invoke :add  320
+INFO  jepsen.util - 172 :invoke :add  321
+INFO  jepsen.util - 172 :ok :add  321
+INFO  jepsen.util - 173 :invoke :add  322
+INFO  jepsen.util - 173 :ok :add  322
+INFO  jepsen.util - 174 :invoke :add  323
+INFO  jepsen.util - 174 :ok :add  323
+INFO  jepsen.util - 200 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  324
+INFO  jepsen.util - 173 :invoke :add  325
+INFO  jepsen.util - 172 :ok :add  324
+INFO  jepsen.util - 173 :ok :add  325
+INFO  jepsen.util - 174 :invoke :add  326
+INFO  jepsen.util - 174 :ok :add  326
+INFO  jepsen.util - 205 :invoke :add  327
+INFO  jepsen.util - 173 :invoke :add  328
+INFO  jepsen.util - 173 :ok :add  328
+INFO  jepsen.util - 172 :invoke :add  329
+INFO  jepsen.util - 172 :ok :add  329
+INFO  jepsen.util - 174 :invoke :add  330
+INFO  jepsen.util - 174 :ok :add  330
+INFO  jepsen.util - 173 :invoke :add  331
+INFO  jepsen.util - 173 :ok :add  331
+INFO  jepsen.util - 172 :invoke :add  332
+INFO  jepsen.util - 172 :ok :add  332
+INFO  jepsen.util - 174 :invoke :add  333
+INFO  jepsen.util - 174 :ok :add  333
+INFO  jepsen.util - 201 :info :add  :timed-out
+INFO  jepsen.util - 173 :invoke :add  334
+INFO  jepsen.util - 173 :ok :add  334
+INFO  jepsen.util - 172 :invoke :add  335
+INFO  jepsen.util - 172 :ok :add  335
+INFO  jepsen.util - 174 :invoke :add  336
+INFO  jepsen.util - 174 :ok :add  336
+INFO  jepsen.util - 206 :invoke :add  337
+INFO  jepsen.util - 206 :ok :add  337
+INFO  jepsen.util - 172 :invoke :add  338
+INFO  jepsen.util - 172 :ok :add  338
+INFO  jepsen.util - 173 :invoke :add  339
+INFO  jepsen.util - 173 :ok :add  339
+INFO  jepsen.util - 174 :invoke :add  340
+INFO  jepsen.util - 174 :ok :add  340
+INFO  jepsen.util - 205 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  341
+INFO  jepsen.util - 172 :ok :add  341
+INFO  jepsen.util - 173 :invoke :add  342
+INFO  jepsen.util - 206 :invoke :add  343
+INFO  jepsen.util - 173 :ok :add  342
+INFO  jepsen.util - 174 :invoke :add  344
+INFO  jepsen.util - 174 :ok :add  344
+INFO  jepsen.util - 210 :invoke :add  345
+INFO  jepsen.util - 173 :invoke :add  346
+INFO  jepsen.util - 172 :invoke :add  347
+INFO  jepsen.util - 173 :ok :add  346
+INFO  jepsen.util - 172 :ok :add  347
+INFO  jepsen.util - 174 :invoke :add  348
+INFO  jepsen.util - 174 :ok :add  348
+INFO  jepsen.util - 173 :invoke :add  349
+INFO  jepsen.util - 172 :invoke :add  350
+INFO  jepsen.util - 173 :ok :add  349
+INFO  jepsen.util - 172 :ok :add  350
+INFO  jepsen.util - 174 :invoke :add  351
+INFO  jepsen.util - 174 :ok :add  351
+INFO  jepsen.util - 173 :invoke :add  352
+INFO  jepsen.util - 172 :invoke :add  353
+INFO  jepsen.util - 173 :ok :add  352
+INFO  jepsen.util - 172 :ok :add  353
+INFO  jepsen.util - 174 :invoke :add  354
+INFO  jepsen.util - 174 :ok :add  354
+INFO  jepsen.util - 172 :invoke :add  355
+INFO  jepsen.util - 172 :ok :add  355
+INFO  jepsen.util - 173 :invoke :add  356
+INFO  jepsen.util - 173 :ok :add  356
+INFO  jepsen.util - 174 :invoke :add  357
+INFO  jepsen.util - 174 :ok :add  357
+INFO  jepsen.util - 206 :info :add  :timed-out
+INFO  jepsen.util - 173 :invoke :add  358
+INFO  jepsen.util - 173 :ok :add  358
+INFO  jepsen.util - 172 :invoke :add  359
+INFO  jepsen.util - 172 :ok :add  359
+INFO  jepsen.util - 174 :invoke :add  360
+INFO  jepsen.util - 174 :ok :add  360
+INFO  jepsen.util - 210 :info :add  :timed-out
+INFO  jepsen.util - 211 :invoke :add  361
+INFO  jepsen.util - 173 :invoke :add  362
+INFO  jepsen.util - 173 :ok :add  362
+INFO  jepsen.util - 172 :invoke :add  363
+INFO  jepsen.util - 172 :ok :add  363
+INFO  jepsen.util - 174 :invoke :add  364
+INFO  jepsen.util - 174 :ok :add  364
+INFO  jepsen.util - 215 :invoke :add  365
+INFO  jepsen.util - 173 :invoke :add  366
+INFO  jepsen.util - 173 :ok :add  366
+INFO  jepsen.util - 172 :invoke :add  367
+INFO  jepsen.util - 172 :ok :add  367
+INFO  jepsen.util - 174 :invoke :add  368
+INFO  jepsen.util - 174 :ok :add  368
+INFO  jepsen.util - 173 :invoke :add  369
+INFO  jepsen.util - 173 :ok :add  369
+INFO  jepsen.util - 174 :invoke :add  370
+INFO  jepsen.util - 174 :ok :add  370
+INFO  jepsen.util - 172 :invoke :add  371
+INFO  jepsen.util - 172 :ok :add  371
+INFO  jepsen.util - 173 :invoke :add  372
+INFO  jepsen.util - 173 :ok :add  372
+INFO  jepsen.util - 172 :invoke :add  373
+INFO  jepsen.util - 172 :ok :add  373
+INFO  jepsen.util - 174 :invoke :add  374
+INFO  jepsen.util - 174 :ok :add  374
+INFO  jepsen.util - 173 :invoke :add  375
+INFO  jepsen.util - 173 :ok :add  375
+INFO  jepsen.util - 211 :info :add  :timed-out
+INFO  jepsen.util - 174 :invoke :add  376
+INFO  jepsen.util - 174 :ok :add  376
+INFO  jepsen.util - 172 :invoke :add  377
+INFO  jepsen.util - 172 :ok :add  377
+INFO  jepsen.util - 173 :invoke :add  378
+INFO  jepsen.util - 173 :ok :add  378
+INFO  jepsen.util - 215 :info :add  :timed-out
+INFO  jepsen.util - 216 :invoke :add  379
+INFO  jepsen.util - 174 :invoke :add  380
+INFO  jepsen.util - 174 :ok :add  380
+INFO  jepsen.util - 172 :invoke :add  381
+INFO  jepsen.util - 172 :ok :add  381
+INFO  jepsen.util - 173 :invoke :add  382
+INFO  jepsen.util - 173 :ok :add  382
+INFO  jepsen.util - 220 :invoke :add  383
+INFO  jepsen.util - 174 :invoke :add  384
+INFO  jepsen.util - 174 :ok :add  384
+INFO  jepsen.util - 172 :invoke :add  385
+INFO  jepsen.util - 172 :ok :add  385
+INFO  jepsen.util - 173 :invoke :add  386
+INFO  jepsen.util - 173 :ok :add  386
+INFO  jepsen.util - 174 :invoke :add  387
+INFO  jepsen.util - 174 :ok :add  387
+INFO  jepsen.util - 172 :invoke :add  388
+INFO  jepsen.util - 172 :ok :add  388
+INFO  jepsen.util - 173 :invoke :add  389
+INFO  jepsen.util - 173 :ok :add  389
+INFO  jepsen.util - 174 :invoke :add  390
+INFO  jepsen.util - 174 :ok :add  390
+INFO  jepsen.util - 172 :invoke :add  391
+INFO  jepsen.util - 172 :ok :add  391
+INFO  jepsen.util - 173 :invoke :add  392
+INFO  jepsen.util - 173 :ok :add  392
+INFO  jepsen.util - 174 :invoke :add  393
+INFO  jepsen.util - 174 :ok :add  393
+INFO  jepsen.util - 172 :invoke :add  394
+INFO  jepsen.util - 172 :ok :add  394
+INFO  jepsen.util - 216 :info :add  :timed-out
+INFO  jepsen.util - 173 :invoke :add  395
+INFO  jepsen.util - 173 :ok :add  395
+INFO  jepsen.util - 174 :invoke :add  396
+INFO  jepsen.util - 174 :ok :add  396
+INFO  jepsen.util - 172 :invoke :add  397
+INFO  jepsen.util - 172 :ok :add  397
+INFO  jepsen.util - 221 :invoke :add  398
+INFO  jepsen.util - 221 :ok :add  398
+INFO  jepsen.util - 220 :info :add  :timed-out
+INFO  jepsen.util - 173 :invoke :add  399
+INFO  jepsen.util - 173 :ok :add  399
+INFO  jepsen.util - 174 :invoke :add  400
+INFO  jepsen.util - 174 :ok :add  400
+INFO  jepsen.util - 172 :invoke :add  401
+INFO  jepsen.util - 172 :ok :add  401
+INFO  jepsen.util - 221 :invoke :add  402
+INFO  jepsen.util - 225 :invoke :add  403
+INFO  jepsen.util - 173 :invoke :add  404
+INFO  jepsen.util - 173 :ok :add  404
+INFO  jepsen.util - 174 :invoke :add  405
+INFO  jepsen.util - 174 :ok :add  405
+INFO  jepsen.util - 172 :invoke :add  406
+INFO  jepsen.util - 172 :ok :add  406
+INFO  jepsen.util - 173 :invoke :add  407
+INFO  jepsen.util - 173 :ok :add  407
+INFO  jepsen.util - 174 :invoke :add  408
+INFO  jepsen.util - 174 :ok :add  408
+INFO  jepsen.util - 172 :invoke :add  409
+INFO  jepsen.util - 172 :ok :add  409
+INFO  jepsen.util - 173 :invoke :add  410
+INFO  jepsen.util - 174 :invoke :add  411
+INFO  jepsen.util - 173 :ok :add  410
+INFO  jepsen.util - 174 :ok :add  411
+INFO  jepsen.util - 172 :invoke :add  412
+INFO  jepsen.util - 172 :ok :add  412
+INFO  jepsen.util - 173 :invoke :add  413
+INFO  jepsen.util - 173 :ok :add  413
+INFO  jepsen.util - 174 :invoke :add  414
+INFO  jepsen.util - 174 :ok :add  414
+INFO  jepsen.util - 172 :invoke :add  415
+INFO  jepsen.util - 172 :ok :add  415
+INFO  jepsen.util - 173 :invoke :add  416
+INFO  jepsen.util - 173 :ok :add  416
+INFO  jepsen.util - 174 :invoke :add  417
+INFO  jepsen.util - 174 :ok :add  417
+INFO  jepsen.util - 221 :info :add  :timed-out
+INFO  jepsen.util - 225 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  418
+INFO  jepsen.util - 172 :ok :add  418
+INFO  jepsen.util - 173 :invoke :add  419
+INFO  jepsen.util - 173 :ok :add  419
+INFO  jepsen.util - 174 :invoke :add  420
+INFO  jepsen.util - 174 :ok :add  420
+INFO  jepsen.util - 226 :invoke :add  421
+INFO  jepsen.util - 230 :invoke :add  422
+INFO  jepsen.util - 230 :ok :add  422
+INFO  jepsen.util - 172 :invoke :add  423
+INFO  jepsen.util - 172 :ok :add  423
+INFO  jepsen.util - 173 :invoke :add  424
+INFO  jepsen.util - 173 :ok :add  424
+INFO  jepsen.util - 174 :invoke :add  425
+INFO  jepsen.util - 174 :ok :add  425
+INFO  jepsen.util - 230 :invoke :add  426
+INFO  jepsen.util - 172 :invoke :add  427
+INFO  jepsen.util - 172 :ok :add  427
+INFO  jepsen.util - 173 :invoke :add  428
+INFO  jepsen.util - 173 :ok :add  428
+INFO  jepsen.util - 174 :invoke :add  429
+INFO  jepsen.util - 174 :ok :add  429
+INFO  jepsen.util - 172 :invoke :add  430
+INFO  jepsen.util - 172 :ok :add  430
+INFO  jepsen.util - 173 :invoke :add  431
+INFO  jepsen.util - 173 :ok :add  431
+INFO  jepsen.util - 174 :invoke :add  432
+INFO  jepsen.util - 174 :ok :add  432
+INFO  jepsen.util - 172 :invoke :add  433
+INFO  jepsen.util - 172 :ok :add  433
+INFO  jepsen.util - 173 :invoke :add  434
+INFO  jepsen.util - 173 :ok :add  434
+INFO  jepsen.util - 174 :invoke :add  435
+INFO  jepsen.util - 174 :ok :add  435
+INFO  jepsen.util - 172 :invoke :add  436
+INFO  jepsen.util - 172 :ok :add  436
+INFO  jepsen.util - 226 :info :add  :timed-out
+INFO  jepsen.util - 173 :invoke :add  437
+INFO  jepsen.util - 173 :ok :add  437
+INFO  jepsen.util - 174 :invoke :add  438
+INFO  jepsen.util - 174 :ok :add  438
+INFO  jepsen.util - 172 :invoke :add  439
+INFO  jepsen.util - 172 :ok :add  439
+INFO  jepsen.util - 231 :invoke :add  440
+INFO  jepsen.util - 230 :info :add  :timed-out
+INFO  jepsen.util - 173 :invoke :add  441
+INFO  jepsen.util - 173 :ok :add  441
+INFO  jepsen.util - 174 :invoke :add  442
+INFO  jepsen.util - 174 :ok :add  442
+INFO  jepsen.util - 172 :invoke :add  443
+INFO  jepsen.util - 172 :ok :add  443
+INFO  jepsen.util - 235 :invoke :add  444
+INFO  jepsen.util - 173 :invoke :add  445
+INFO  jepsen.util - 173 :ok :add  445
+INFO  jepsen.util - 174 :invoke :add  446
+INFO  jepsen.util - 174 :ok :add  446
+INFO  jepsen.util - 172 :invoke :add  447
+INFO  jepsen.util - 172 :ok :add  447
+INFO  jepsen.util - 173 :invoke :add  448
+INFO  jepsen.util - 173 :ok :add  448
+INFO  jepsen.util - 174 :invoke :add  449
+INFO  jepsen.util - 174 :ok :add  449
+INFO  jepsen.util - 172 :invoke :add  450
+INFO  jepsen.util - 172 :ok :add  450
+INFO  jepsen.util - 173 :invoke :add  451
+INFO  jepsen.util - 173 :ok :add  451
+INFO  jepsen.util - 174 :invoke :add  452
+INFO  jepsen.util - 174 :ok :add  452
+INFO  jepsen.util - 172 :invoke :add  453
+INFO  jepsen.util - 172 :ok :add  453
+INFO  jepsen.util - 173 :invoke :add  454
+INFO  jepsen.util - 173 :ok :add  454
+INFO  jepsen.util - 174 :invoke :add  455
+INFO  jepsen.util - 174 :ok :add  455
+INFO  jepsen.util - 231 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  456
+INFO  jepsen.util - 172 :ok :add  456
+INFO  jepsen.util - 173 :invoke :add  457
+INFO  jepsen.util - 173 :ok :add  457
+INFO  jepsen.util - 174 :invoke :add  458
+INFO  jepsen.util - 174 :ok :add  458
+INFO  jepsen.util - 236 :invoke :add  459
+INFO  jepsen.util - 235 :info :add  :timed-out
+INFO  jepsen.util - 172 :invoke :add  460
+INFO  jepsen.util - 172 :ok :add  460
+INFO  jepsen.util - 236 :info :add  :timed-out
+INFO  jepsen.util - :nemesis  :info :stop nil
+INFO  jepsen.util - :nemesis  :info :stop "fully connected"
+INFO  jepsen.util - :nemesis  :info :stop nil
+INFO  jepsen.util - :nemesis  :info :stop "fully connected"
+INFO  jepsen.core - nemesis done
+INFO  jepsen.util - 173 :invoke :read nil
+INFO  jepsen.core - Worker 0 done
+INFO  jepsen.core - Worker 1 done
+INFO  jepsen.core - Worker 4 done
+INFO  jepsen.core - Worker 2 done
+INFO  jepsen.system.elasticsearch - Waiting for recovery before read
+INFO  jepsen.system.elasticsearch - Elasticsearch reports green, but it's probably lying, so waiting another 10s
+INFO  jepsen.system.elasticsearch - Recovered; flushing index before read
+INFO  jepsen.util - 173 :ok :read #{0 1 2 3 4 6 8 12 15 17 19 23 27 29 31 34 36 38 40 43 44 47 50 53 55 61 64 66 71 74 78 81 83 84 86 91 92 97 99 100 103 109 110 114 116 119 120 121 126 132 133 137 138 139 142 143 144 147 148 149 152 153 154 157 158 159 163 164 165 168 169 170 171 175 176 177 178 179 182 184 185 187 189 191 192 194 195 196 197 198 199 201 202 203 205 206 207 208 209 210 212 213 214 215 216 217 218 219 220 221 222 223 225 226 227 228 230 231 233 234 235 236 237 238 239 240 241 243 244 245 246 247 248 249 250 251 253 254 255 256 257 258 259 260 261 263 264 265 266 267 268 269 270 272 273 274 275 276 277 278 280 281 282 284 285 286 287 288 289 291 292 293 294 295 296 297 298 299 300 301 303 304 305 306 307 309 310 311 312 313 314 315 316 317 318 319 321 322 323 324 325 326 328 329 330 331 332 333 334 335 336 338 339 340 341 342 344 346 347 348 349 350 351 352 353 354 355 356 357 358 359 360 362 363 364 366 367 368 369 370 371 372 373 374 375 376 377 378 380 381 382 384 385 386 387 388 389 390 391 392 393 394 395 396 397 399 400 401 404 405 406 407 408 409 410 411 412 413 414 415 416 417 418 419 420 423 424 425 427 428 429 430 431 432 433 434 435 436 437 438 439 441 442 443 445 446 447 448 449 450 451 452 453 454 455 456 457 458 460}
+INFO  jepsen.core - Worker 3 done
+INFO  jepsen.core - Run complete, writing
+INFO  jepsen.core - Analyzing
+INFO  jepsen.core - Analysis complete
+INFO  jepsen.system.elasticsearch - :n1 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n5 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n3 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n4 elasticsearch nuked
+INFO  jepsen.system.elasticsearch - :n2 elasticsearch nuked
+
+FAIL in (create-test) (elasticsearch_test.clj:87)
+expected: (:valid? (:results test))
+  actual: false
+{:valid? false,
+ :html {:valid? true},
+ :set
+ {:valid? false,
+  :lost
+  "#{90 94 104 107 122..123 135 160 173 181 188 200 229 279 337 398 422}",
+  :recovered
+  "#{6 8 12 15 17 19 23 27 29 31 34 36 38 40 43..44 47 50 53 55 61 64 66 71 74 78 81 83..84 86 91..92 97 99..100 103 109..110 114 116 119..121 126 132..133 137..139 142..144 147..149 152..154 157..159 163..165 168..169 171 176..177 179 182 184..185}",
+  :ok
+  "#{0..4 6 8 12 15 17 19 23 27 29 31 34 36 38 40 43..44 47 50 53 55 61 64 66 71 74 78 81 83..84 86 91..92 97 99..100 103 109..110 114 116 119..121 126 132..133 137..139 142..144 147..149 152..154 157..159 163..165 168..171 175..179 182 184..185 187 189 191..192 194..199 201..203 205..210 212..223 225..228 230..231 233..241 243..251 253..261 263..270 272..278 280..282 284..289 291..301 303..307 309..319 321..326 328..336 338..342 344 346..360 362..364 366..378 380..382 384..397 399..401 404..420 423..425 427..439 441..443 445..458 460}",
+  :recovered-frac 73/461,
+  :unexpected-frac 0,
+  :unexpected "#{}",
+  :lost-frac 17/461,
+  :ok-frac 319/461}}
+
+Ran 1 tests containing 1 assertions.
+1 failures, 0 errors.
+
