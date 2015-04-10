@@ -1,0 +1,64 @@
+Not linearizable. Linearizable prefix was:
+4	:invoke	:read	{0 10, 1 10}
+3	:invoke	:read	{0 10, 1 10}
+1	:invoke	:transfer	{:from 0, :to 0, :amount 0}
+2	:invoke	:transfer	{:from 0, :to 1, :amount 0}
+0	:invoke	:transfer	{:from 1, :to 0, :amount 0}
+3	:ok	:read	{0 10, 1 10}
+4	:ok	:read	{0 10, 1 10}
+1	:ok	:transfer	{:from 0, :to 0, :amount 0}
+0	:ok	:transfer	{:from 1, :to 0, :amount 0}
+2	:ok	:transfer	{:from 0, :to 1, :amount 0}
+3	:invoke	:read	{1 10, 0 10}
+4	:invoke	:read	{1 10, 0 10}
+3	:ok	:read	{1 10, 0 10}
+4	:ok	:read	{1 10, 0 10}
+1	:invoke	:transfer	{:from 1, :to 0, :amount 4}
+0	:invoke	:read	{1 6, 0 10}
+2	:invoke	:read	{1 6, 0 10}
+
+Followed by inconsistent operation:
+0	:ok	:read	{1 6, 0 10}
+
+-------------------------------------------------------------
+Just prior to that operation, possible interpretations of the
+linearizable prefix were:
+World with fixed history:
+4	:invoke	:read	{0 10, 1 10}
+3	:invoke	:read	{0 10, 1 10}
+2	:invoke	:transfer	{:from 0, :to 1, :amount 0}
+1	:invoke	:transfer	{:from 0, :to 0, :amount 0}
+0	:invoke	:transfer	{:from 1, :to 0, :amount 0}
+3	:invoke	:read	{1 10, 0 10}
+4	:invoke	:read	{1 10, 0 10}
+1	:invoke	:transfer	{:from 1, :to 0, :amount 4}
+
+led to state: 
+{:accts {0 14, 1 6}}
+
+with pending operations:
+0	:invoke	:read	{1 6, 0 10}
+2	:invoke	:read	{1 6, 0 10}
+
+World with fixed history:
+4	:invoke	:read	{0 10, 1 10}
+3	:invoke	:read	{0 10, 1 10}
+2	:invoke	:transfer	{:from 0, :to 1, :amount 0}
+1	:invoke	:transfer	{:from 0, :to 0, :amount 0}
+0	:invoke	:transfer	{:from 1, :to 0, :amount 0}
+3	:invoke	:read	{1 10, 0 10}
+4	:invoke	:read	{1 10, 0 10}
+
+led to state: 
+{:accts {0 10, 1 10}}
+
+with pending operations:
+0	:invoke	:read	{1 6, 0 10}
+2	:invoke	:read	{1 6, 0 10}
+1	:invoke	:transfer	{:from 1, :to 0, :amount 4}
+
+--------------------------------------------------------------
+
+Inconsistent state transitions:
+([{:accts {0 14, 1 6}} "Can't read {1 6, 0 10} from {0 14, 1 6}"]
+ [{:accts {0 10, 1 10}} "Can't read {1 6, 0 10} from {0 10, 1 10}"])

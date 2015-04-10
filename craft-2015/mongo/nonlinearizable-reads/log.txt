@@ -1,0 +1,31 @@
+2015-03-10T20:40:09.949-0700 [rsBackgroundSync] DBClientCursor::init call() failed
+2015-03-10T20:40:09.949-0700 [rsBackgroundSync] SyncSourceFeedback error sending chained handshakes: DBClientBase::findN: transport error: n4:27017 ns: admin.$cmd query: { replSetUpdatePosition: 1, handshake: { handshake: ObjectId('54ffb81a84707b30f31fade5'), member: 1, config: { _id: 1, host: "n2:27017" } } }
+2015-03-10T20:40:09.950-0700 [rsBackgroundSync] replSet our last op time fetched: Mar 10 20:38:04:2
+2015-03-10T20:40:09.950-0700 [rsBackgroundSync] replset source's GTE: Mar 10 20:38:23:1
+2015-03-10T20:40:09.950-0700 [rsBackgroundSync] replSet rollback 0
+2015-03-10T20:40:09.950-0700 [rsBackgroundSync] replSet ROLLBACK
+2015-03-10T20:40:09.950-0700 [rsBackgroundSync] replSet rollback 1
+2015-03-10T20:40:09.950-0700 [rsBackgroundSync] replSet rollback 2 FindCommonPoint
+2015-03-10T20:40:09.951-0700 [rsBackgroundSync] replSet info rollback our last optime:   Mar 10 20:38:04:2
+2015-03-10T20:40:09.951-0700 [rsBackgroundSync] replSet info rollback their last optime: Mar 10 20:39:28:4
+2015-03-10T20:40:09.951-0700 [rsBackgroundSync] replSet info rollback diff in end of log times: -84 seconds
+2015-03-10T20:40:09.953-0700 [rsBackgroundSync] replSet rollback found matching events at Mar 10 20:37:52:3
+2015-03-10T20:40:09.953-0700 [rsBackgroundSync] replSet rollback findcommonpoint scanned : 316
+2015-03-10T20:40:09.953-0700 [rsBackgroundSync] replSet replSet rollback 3 fixup
+2015-03-10T20:40:10.339-0700 [rsBackgroundSync] replSet rollback 3.5
+2015-03-10T20:40:10.339-0700 [rsBackgroundSync] replSet rollback 4 n:1
+2015-03-10T20:40:10.339-0700 [rsBackgroundSync] replSet minvalid=Mar 10 20:39:28 54ffb8f0:4
+2015-03-10T20:40:10.340-0700 [rsBackgroundSync] build index on: local.replset.minvalid properties: { v: 1, key: { _id: 1 }, name: "_id_", ns: "local.replset.minvalid" }
+2015-03-10T20:40:10.340-0700 [rsBackgroundSync]    added index to empty collection
+2015-03-10T20:40:10.340-0700 [rsBackgroundSync] replSet rollback 4.6
+2015-03-10T20:40:10.340-0700 [rsBackgroundSync] replSet rollback 4.7
+2015-03-10T20:40:10.341-0700 [rsBackgroundSync] replSet rollback 5 d:0 u:1
+2015-03-10T20:40:10.634-0700 [rsBackgroundSync] replSet rollback 6
+2015-03-10T20:40:10.634-0700 [rsBackgroundSync] replSet rollback 7
+2015-03-10T20:40:10.928-0700 [rsBackgroundSync] replSet rollback done
+2015-03-10T20:40:10.928-0700 [rsBackgroundSync] replSet RECOVERING
+2015-03-10T20:40:10.928-0700 [rsSync] replSet still syncing, not yet to minValid optime 54ffb8f0:4
+2015-03-10T20:40:10.929-0700 [rsBackgroundSync] replSet syncing to: n4:27017
+2015-03-10T20:40:10.930-0700 [rsBackgroundSync] replset setting syncSourceFeedback to n4:27017
+2015-03-10T20:40:10.933-0700 [rsSync] replSet still syncing, not yet to minValid optime 54ffb8f0:4
+2015-03-10T20:40:10.940-0700 [rsSync] replSet SECONDARY
