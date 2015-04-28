@@ -1,0 +1,295 @@
+[2015-04-02 18:00:52,016][INFO ][node                     ] [n2] version[1.5.0], pid[33143], build[5448160/2015-03-23T14:30:58Z]
+[2015-04-02 18:00:52,017][INFO ][node                     ] [n2] initializing ...
+[2015-04-02 18:00:52,020][INFO ][plugins                  ] [n2] loaded [], sites []
+[2015-04-02 18:00:54,116][INFO ][node                     ] [n2] initialized
+[2015-04-02 18:00:54,116][INFO ][node                     ] [n2] starting ...
+[2015-04-02 18:00:54,260][INFO ][transport                ] [n2] bound_address {inet[/0.0.0.0:9300]}, publish_address {inet[/192.168.122.12:9300]}
+[2015-04-02 18:00:54,275][INFO ][discovery                ] [n2] elasticsearch/KMX-tXCgSq24p2Yh-H3wpQ
+[2015-04-02 18:00:57,321][INFO ][cluster.service          ] [n2] detected_master [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]], added {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:00:57,337][INFO ][http                     ] [n2] bound_address {inet[/0.0.0.0:9200]}, publish_address {inet[/192.168.122.12:9200]}
+[2015-04-02 18:00:57,338][INFO ][node                     ] [n2] started
+[2015-04-02 18:00:57,420][INFO ][cluster.service          ] [n2] added {[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:00:57,491][INFO ][cluster.service          ] [n2] added {[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:01:14,339][INFO ][discovery.zen            ] [n2] master_left [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [failed to ping, tried [2] times, each with  maximum [1s] timeout]
+[2015-04-02 18:01:14,341][WARN ][discovery.zen            ] [n2] master left (reason = failed to ping, tried [2] times, each with  maximum [1s] timeout), current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}
+[2015-04-02 18:01:14,341][INFO ][cluster.service          ] [n2] removed {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-master_failed ([n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]])
+[2015-04-02 18:01:54,598][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:02:15,469][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:21,572][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:24,698][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:02:27,642][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:33,807][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:39,830][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:44,720][INFO ][cluster.service          ] [n2] detected_master [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]], reason: zen-disco-receive(from master [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]])
+[2015-04-02 18:02:54,802][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:03:24,841][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:03:57,791][INFO ][discovery.zen            ] [n2] master_left [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]], reason [failed to ping, tried [2] times, each with  maximum [1s] timeout]
+[2015-04-02 18:03:57,792][WARN ][discovery.zen            ] [n2] master left (reason = failed to ping, tried [2] times, each with  maximum [1s] timeout), current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}
+[2015-04-02 18:03:57,792][INFO ][cluster.service          ] [n2] removed {[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],}, reason: zen-disco-master_failed ([n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]])
+[2015-04-02 18:04:33,002][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:04:55,680][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:01,775][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:03,101][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:05:07,860][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:13,875][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:19,942][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:26,058][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:28,315][INFO ][discovery.zen            ] [n2] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [RemoteTransportException[[n4][inet[/192.168.122.14:9300]][internal:discovery/zen/join]]; nested: ElasticsearchIllegalStateException[Node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]] not master for join request from [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]]; ], tried [3] times
+[2015-04-02 18:05:32,236][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:33,203][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:05:38,272][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:44,383][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:50,496][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:56,591][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:58,393][WARN ][discovery.zen.ping.multicast] [n2] received ping response ping_response{node [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]], id[117], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:05:58,393][WARN ][discovery.zen.ping.multicast] [n2] received ping response ping_response{node [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]], id[120], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:05:58,417][INFO ][cluster.service          ] [n2] detected_master [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]], added {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:06:03,300][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:06:36,226][INFO ][cluster.service          ] [n2] added {[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:06:39,458][INFO ][discovery.zen            ] [n2] master_left [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [failed to ping, tried [2] times, each with  maximum [1s] timeout]
+[2015-04-02 18:06:39,459][WARN ][discovery.zen            ] [n2] master left (reason = failed to ping, tried [2] times, each with  maximum [1s] timeout), current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}
+[2015-04-02 18:06:39,459][INFO ][cluster.service          ] [n2] removed {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-master_failed ([n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]])
+[2015-04-02 18:07:37,435][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:43,578][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:49,587][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:55,625][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:08:01,823][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:08:07,950][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:08:09,817][INFO ][discovery.zen            ] [n2] failed to send join request to master [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]], reason [RemoteTransportException[[n5][inet[/192.168.122.15:9300]][internal:discovery/zen/join]]; nested: ElasticsearchIllegalStateException[Node [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]] not master for join request from [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]]; ], tried [3] times
+[2015-04-02 18:08:10,390][INFO ][cluster.service          ] [n2] detected_master [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]], reason: zen-disco-receive(from master [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]])
+[2015-04-02 18:08:53,433][INFO ][discovery.zen            ] [n2] master_left [[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]], reason [failed to ping, tried [2] times, each with  maximum [1s] timeout]
+[2015-04-02 18:08:53,434][WARN ][discovery.zen            ] [n2] master left (reason = failed to ping, tried [2] times, each with  maximum [1s] timeout), current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}
+[2015-04-02 18:08:53,434][INFO ][cluster.service          ] [n2] removed {[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],}, reason: zen-disco-master_failed ([n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]])
+[2015-04-02 18:08:53,438][WARN ][action.index             ] [n2] Failed to perform indices:data/write/index on remote replica [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]][jepsen-index][3]
+org.elasticsearch.transport.NodeDisconnectedException: [n5][inet[/192.168.122.15:9300]][indices:data/write/index[r]] disconnected
+[2015-04-02 18:08:53,438][WARN ][action.index             ] [n2] Failed to perform indices:data/write/index on remote replica [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]][jepsen-index][0]
+org.elasticsearch.transport.NodeDisconnectedException: [n5][inet[/192.168.122.15:9300]][indices:data/write/index[r]] disconnected
+[2015-04-02 18:08:53,438][WARN ][action.index             ] [n2] Failed to perform indices:data/write/index on remote replica [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]][jepsen-index][3]
+org.elasticsearch.transport.NodeDisconnectedException: [n5][inet[/192.168.122.15:9300]][indices:data/write/index[r]] disconnected
+[2015-04-02 18:08:53,439][WARN ][cluster.action.shard     ] [n2] can't send shard failed for [jepsen-index][0], node[4dq4CSLOSKCopM06HfnCMw], [R], s[STARTED]. no master known.
+[2015-04-02 18:08:53,439][WARN ][cluster.action.shard     ] [n2] can't send shard failed for [jepsen-index][3], node[4dq4CSLOSKCopM06HfnCMw], [R], s[STARTED]. no master known.
+[2015-04-02 18:08:53,439][WARN ][cluster.action.shard     ] [n2] can't send shard failed for [jepsen-index][3], node[4dq4CSLOSKCopM06HfnCMw], [R], s[STARTED]. no master known.
+[2015-04-02 18:09:28,598][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:09:54,489][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:09:58,602][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:10:00,662][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:06,745][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:12,820][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:18,920][DEBUG][action.index             ] [n2] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:23,716][INFO ][cluster.service          ] [n2] new_master [n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]], reason: zen-disco-join (elected_as_master)
+[2015-04-02 18:10:28,698][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:10:58,739][WARN ][discovery.zen.ping.multicast] [n2] failed to connect to requesting node [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n5][inet[/192.168.122.15:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.15:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:11:36,434][WARN ][transport                ] [n2] Received response for a request that has timed out, sent [1633ms] ago, timed out [633ms] ago, action [internal:discovery/zen/fd/ping], node [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]], id [1899]
+[2015-04-02 18:11:36,434][WARN ][transport                ] [n2] Received response for a request that has timed out, sent [1633ms] ago, timed out [633ms] ago, action [internal:discovery/zen/fd/ping], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [1900]
+[2015-04-02 18:11:39,482][WARN ][discovery.zen            ] [n2] discovered [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]] which is also master but with an older cluster_state, telling [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]] to rejoin the cluster ([via a new cluster state])
+[2015-04-02 18:11:39,647][WARN ][discovery.zen            ] [n2] discovered [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]] which is also master but with an older cluster_state, telling [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]] to rejoin the cluster ([via a new cluster state])
+[2015-04-02 18:11:43,505][INFO ][cluster.service          ] [n2] added {[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],}, reason: zen-disco-receive(join from node[[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]]])
+[2015-04-02 18:11:44,297][INFO ][cluster.service          ] [n2] added {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-receive(join from node[[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:12:10,275][INFO ][node                     ] [n2] stopping ...
+[2015-04-02 18:12:10,322][INFO ][node                     ] [n2] stopped
+[2015-04-02 18:12:10,323][INFO ][node                     ] [n2] closing ...
+[2015-04-02 18:12:10,335][INFO ][node                     ] [n2] closed

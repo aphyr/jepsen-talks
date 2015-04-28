@@ -1,0 +1,808 @@
+[2015-04-02 18:00:52,051][INFO ][node                     ] [n5] version[1.5.0], pid[31370], build[5448160/2015-03-23T14:30:58Z]
+[2015-04-02 18:00:52,051][INFO ][node                     ] [n5] initializing ...
+[2015-04-02 18:00:52,054][INFO ][plugins                  ] [n5] loaded [], sites []
+[2015-04-02 18:00:54,299][INFO ][node                     ] [n5] initialized
+[2015-04-02 18:00:54,299][INFO ][node                     ] [n5] starting ...
+[2015-04-02 18:00:54,455][INFO ][transport                ] [n5] bound_address {inet[/0.0.0.0:9300]}, publish_address {inet[/192.168.122.15:9300]}
+[2015-04-02 18:00:54,466][INFO ][discovery                ] [n5] elasticsearch/4dq4CSLOSKCopM06HfnCMw
+[2015-04-02 18:00:57,497][INFO ][cluster.service          ] [n5] detected_master [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]], added {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:00:57,548][INFO ][http                     ] [n5] bound_address {inet[/0.0.0.0:9200]}, publish_address {inet[/192.168.122.15:9200]}
+[2015-04-02 18:00:57,548][INFO ][node                     ] [n5] started
+[2015-04-02 18:01:14,512][INFO ][discovery.zen            ] [n5] master_left [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [failed to ping, tried [2] times, each with  maximum [1s] timeout]
+[2015-04-02 18:01:14,514][WARN ][discovery.zen            ] [n5] master left (reason = failed to ping, tried [2] times, each with  maximum [1s] timeout), current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}
+[2015-04-02 18:01:14,514][INFO ][cluster.service          ] [n5] removed {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-master_failed ([n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]])
+[2015-04-02 18:01:14,521][WARN ][action.index             ] [n5] Failed to perform indices:data/write/index on remote replica [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]][jepsen-index][1]
+org.elasticsearch.transport.NodeDisconnectedException: [n4][inet[/192.168.122.14:9300]][indices:data/write/index[r]] disconnected
+[2015-04-02 18:01:14,524][WARN ][cluster.action.shard     ] [n5] can't send shard failed for [jepsen-index][1], node[2vH5KpMETKWmAZRQh0iqdw], [R], s[STARTED]. no master known.
+[2015-04-02 18:01:54,594][WARN ][discovery.zen.ping.multicast] [n5] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:02:15,469][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:21,515][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:24,691][WARN ][discovery.zen.ping.multicast] [n5] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:02:27,693][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:33,727][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:39,889][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:02:44,713][INFO ][cluster.service          ] [n5] new_master [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]], reason: zen-disco-join (elected_as_master)
+[2015-04-02 18:02:54,706][WARN ][discovery.zen.ping.multicast] [n5] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:03:24,790][WARN ][discovery.zen.ping.multicast] [n5] failed to connect to requesting node [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n4][inet[/192.168.122.14:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.14:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:03:57,798][INFO ][cluster.service          ] [n5] removed {[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],}, reason: zen-disco-node_failed([n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]), reason failed to ping, tried [2] times, each with maximum [1s] timeout
+[2015-04-02 18:04:02,800][WARN ][discovery.zen.publish    ] [n5] timed out waiting for all nodes to process published state [18] (timeout [5s], pending nodes: [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]], [n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]])
+[2015-04-02 18:04:02,908][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n1][inet[/192.168.122.11:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:04:02,908][WARN ][discovery.zen            ] [n5] not enough master nodes, current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],}
+[2015-04-02 18:04:02,908][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n1][inet[/192.168.122.11:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:04:02,909][INFO ][cluster.service          ] [n5] removed {[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}, reason: zen-disco-node_failed([n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]), reason failed to ping, tried [2] times, each with maximum [1s] timeout
+[2015-04-02 18:04:02,908][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n1][inet[/192.168.122.11:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:04:02,908][WARN ][action.index             ] [n5] Failed to perform indices:data/write/index on remote replica [n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]][jepsen-index][1]
+org.elasticsearch.transport.NodeDisconnectedException: [n1][inet[/192.168.122.11:9300]][indices:data/write/index[r]] disconnected
+[2015-04-02 18:04:02,910][WARN ][cluster.action.shard     ] [n5] can't send shard failed for [jepsen-index][1], node[Z-8i6VHlRuK49iWhqJsFxg], [R], s[STARTED]. no master known.
+[2015-04-02 18:04:02,912][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n2][inet[/192.168.122.12:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:04:02,912][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n2][inet[/192.168.122.12:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:04:02,912][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n2][inet[/192.168.122.12:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:04:02,912][WARN ][action.index             ] [n5] Failed to perform indices:data/write/index on remote replica [n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]][jepsen-index][1]
+org.elasticsearch.transport.NodeDisconnectedException: [n2][inet[/192.168.122.12:9300]][indices:data/write/index[r]] disconnected
+[2015-04-02 18:04:02,913][WARN ][cluster.action.shard     ] [n5] can't send shard failed for [jepsen-index][1], node[KMX-tXCgSq24p2Yh-H3wpQ], [R], s[STARTED]. no master known.
+[2015-04-02 18:04:06,661][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [875] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:04:06,662][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [878] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:04:08,162][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [880] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:04:08,163][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [883] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:04:09,664][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [885] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:04:09,665][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [888] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:04:29,893][DEBUG][action.admin.cluster.node.stats] [n5] failed to execute on node [OAaXNyIGQYudsy2O5tddmg]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][cluster:monitor/nodes/stats[n]] request_id [890] timed out after [15000ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:05:07,959][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:14,051][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:20,210][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:26,282][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:32,316][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:36,840][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [896] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:05:36,840][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [899] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:05:38,341][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [900] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:05:38,341][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [903] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:05:38,464][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:39,843][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [904] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:05:39,843][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [907] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:05:44,570][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:50,632][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:56,650][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:05:58,293][WARN ][discovery.zen.ping.multicast] [n5] failed to connect to requesting node [n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n1][inet[/192.168.122.11:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.11:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:05:58,390][WARN ][discovery.zen.ping.multicast] [n5] failed to connect to requesting node [n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]
+org.elasticsearch.transport.ConnectTransportException: [n2][inet[/192.168.122.12:9300]] connect_timeout[30s]
+	at org.elasticsearch.transport.netty.NettyTransport.connectToChannels(NettyTransport.java:797)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:731)
+	at org.elasticsearch.transport.netty.NettyTransport.connectToNode(NettyTransport.java:704)
+	at org.elasticsearch.transport.TransportService.connectToNode(TransportService.java:216)
+	at org.elasticsearch.discovery.zen.ping.multicast.MulticastZenPing$Receiver$1.run(MulticastZenPing.java:542)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.elasticsearch.common.netty.channel.ConnectTimeoutException: connection timed out: /192.168.122.12:9300
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.processConnectTimeout(NioClientBoss.java:139)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:83)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	... 3 more
+[2015-04-02 18:06:02,805][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:03,114][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[174], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:03,114][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[173], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:03,141][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]], id[182], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:03,142][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]], id[181], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:03,194][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id[179], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:03,194][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id[180], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:03,305][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], id[178], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:03,305][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], id[177], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [4]
+[2015-04-02 18:06:06,944][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [912] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:06,945][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [915] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:07,457][DEBUG][action.admin.cluster.state] [n5] no known master node, scheduling a retry
+[2015-04-02 18:06:08,445][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [921] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:08,446][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [925] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:08,934][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:09,946][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [928] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:09,947][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [932] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:12,698][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [ElasticsearchTimeoutException[Timeout waiting for task.]]
+[2015-04-02 18:06:15,120][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:16,450][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [934] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:16,453][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [937] timed out after [3752ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:17,953][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [943] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:17,953][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [947] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:19,454][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [950] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:19,455][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [954] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:21,312][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:22,207][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [ElasticsearchTimeoutException[Timeout waiting for task.]]
+[2015-04-02 18:06:25,958][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [956] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:25,959][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [959] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:27,460][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [965] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:27,460][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [969] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:27,470][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:28,961][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [972] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:28,962][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [976] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:31,714][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [ElasticsearchTimeoutException[Timeout waiting for task.]]
+[2015-04-02 18:06:33,576][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:35,465][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [978] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:35,467][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [981] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:36,227][INFO ][cluster.service          ] [n5] detected_master [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]], added {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:06:36,968][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [987] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:36,968][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [991] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:38,469][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [994] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:38,470][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [998] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:40,229][INFO ][discovery.zen            ] [n5] master_left [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [failed to ping, tried [2] times, each with  maximum [1s] timeout]
+[2015-04-02 18:06:40,229][WARN ][discovery.zen            ] [n5] master left (reason = failed to ping, tried [2] times, each with  maximum [1s] timeout), current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}
+[2015-04-02 18:06:40,230][INFO ][cluster.service          ] [n5] removed {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-master_failed ([n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]])
+[2015-04-02 18:06:40,234][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n4][inet[/192.168.122.14:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:06:40,235][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n4][inet[/192.168.122.14:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:06:40,235][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n4][inet[/192.168.122.14:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:06:40,235][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n4][inet[/192.168.122.14:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:06:40,235][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n4][inet[/192.168.122.14:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:06:43,981][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1019] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:43,983][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1023] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:45,484][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1030] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:45,484][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1034] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:45,746][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:46,985][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1041] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:46,985][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1045] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:06:51,841][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:06:57,909][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:04,048][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:16,237][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:22,361][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:25,243][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [209452ms] ago, timed out [208452ms] ago, action [internal:discovery/zen/fd/ping], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [849]
+[2015-04-02 18:07:25,243][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [208452ms] ago, timed out [207452ms] ago, action [internal:discovery/zen/fd/ping], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [856]
+[2015-04-02 18:07:25,244][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [207446ms] ago, timed out [206446ms] ago, action [internal:discovery/zen/fd/ping], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [861]
+[2015-04-02 18:07:25,244][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [206446ms] ago, timed out [205445ms] ago, action [internal:discovery/zen/fd/ping], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [865]
+[2015-04-02 18:07:25,246][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [202334ms] ago, timed out [198583ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [878]
+[2015-04-02 18:07:25,247][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [110655ms] ago, timed out [106905ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [903]
+[2015-04-02 18:07:25,247][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [80552ms] ago, timed out [76801ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [925]
+[2015-04-02 18:07:25,247][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [71044ms] ago, timed out [67294ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [947]
+[2015-04-02 18:07:25,248][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [61538ms] ago, timed out [57788ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [969]
+[2015-04-02 18:07:25,248][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [52030ms] ago, timed out [48280ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [991]
+[2015-04-02 18:07:28,405][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:28,571][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [204158ms] ago, timed out [200408ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [883]
+[2015-04-02 18:07:28,572][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [112479ms] ago, timed out [108729ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [907]
+[2015-04-02 18:07:28,572][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [82376ms] ago, timed out [78626ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [932]
+[2015-04-02 18:07:28,573][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [72869ms] ago, timed out [69119ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [954]
+[2015-04-02 18:07:28,573][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [63361ms] ago, timed out [59611ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [976]
+[2015-04-02 18:07:28,574][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [53854ms] ago, timed out [50104ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [998]
+[2015-04-02 18:07:28,574][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [46840ms] ago, timed out [43090ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [1034]
+[2015-04-02 18:07:30,107][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [204193ms] ago, timed out [200443ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [885]
+[2015-04-02 18:07:30,107][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [117018ms] ago, timed out [113267ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [896]
+[2015-04-02 18:07:30,108][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [86914ms] ago, timed out [83164ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [912]
+[2015-04-02 18:07:30,108][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [77409ms] ago, timed out [73658ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [934]
+[2015-04-02 18:07:30,109][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [67901ms] ago, timed out [64151ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [956]
+[2015-04-02 18:07:30,110][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [58395ms] ago, timed out [54645ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [978]
+[2015-04-02 18:07:31,131][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [206719ms] ago, timed out [202969ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [880]
+[2015-04-02 18:07:31,132][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [115040ms] ago, timed out [111290ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [904]
+[2015-04-02 18:07:31,133][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [84937ms] ago, timed out [81187ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [928]
+[2015-04-02 18:07:31,133][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [75429ms] ago, timed out [71679ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [950]
+[2015-04-02 18:07:31,134][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [65923ms] ago, timed out [62173ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [972]
+[2015-04-02 18:07:31,135][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [56416ms] ago, timed out [52666ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [994]
+[2015-04-02 18:07:31,136][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [49403ms] ago, timed out [45653ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [1030]
+[2015-04-02 18:07:31,426][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [205511ms] ago, timed out [201761ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [888]
+[2015-04-02 18:07:31,427][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [118336ms] ago, timed out [114586ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [899]
+[2015-04-02 18:07:31,427][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [88232ms] ago, timed out [84482ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [915]
+[2015-04-02 18:07:31,428][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [78727ms] ago, timed out [74975ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [937]
+[2015-04-02 18:07:31,429][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [69220ms] ago, timed out [65470ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [959]
+[2015-04-02 18:07:31,429][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [59713ms] ago, timed out [55962ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [981]
+[2015-04-02 18:07:31,430][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [51199ms] ago, timed out [47449ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [1019]
+[2015-04-02 18:07:31,431][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [48196ms] ago, timed out [44446ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [1041]
+[2015-04-02 18:07:32,154][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [209244ms] ago, timed out [205494ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [875]
+[2015-04-02 18:07:32,155][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [197262ms] ago, timed out [182262ms] ago, action [cluster:monitor/nodes/stats[n]], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [890]
+[2015-04-02 18:07:32,155][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [117565ms] ago, timed out [113814ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [900]
+[2015-04-02 18:07:32,156][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [87461ms] ago, timed out [83711ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [921]
+[2015-04-02 18:07:32,157][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [77955ms] ago, timed out [74204ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [943]
+[2015-04-02 18:07:32,158][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [68447ms] ago, timed out [64697ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [965]
+[2015-04-02 18:07:32,158][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [58941ms] ago, timed out [55191ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [987]
+[2015-04-02 18:07:32,159][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [51927ms] ago, timed out [48176ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [1023]
+[2015-04-02 18:07:32,160][WARN ][transport                ] [n5] Received response for a request that has timed out, sent [48925ms] ago, timed out [45175ms] ago, action [internal:discovery/zen/unicast], node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id [1045]
+[2015-04-02 18:07:34,560][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:40,672][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:46,820][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:53,011][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:07:59,096][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:08:05,180][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:08:10,386][INFO ][cluster.service          ] [n5] new_master [n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]], reason: zen-disco-join (elected_as_master)
+[2015-04-02 18:08:53,438][INFO ][cluster.service          ] [n5] removed {[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],}, reason: zen-disco-node_failed([n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]), reason failed to ping, tried [2] times, each with maximum [1s] timeout
+[2015-04-02 18:08:58,439][WARN ][discovery.zen.publish    ] [n5] timed out waiting for all nodes to process published state [49] (timeout [5s], pending nodes: [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]], [n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]])
+[2015-04-02 18:08:58,563][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n1][inet[/192.168.122.11:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:08:58,563][WARN ][discovery.zen            ] [n5] not enough master nodes, current nodes: {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],}
+[2015-04-02 18:08:58,563][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n1][inet[/192.168.122.11:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:08:58,564][INFO ][cluster.service          ] [n5] removed {[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}, reason: zen-disco-node_failed([n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]), reason failed to ping, tried [2] times, each with maximum [1s] timeout
+[2015-04-02 18:08:58,563][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n1][inet[/192.168.122.11:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:08:58,567][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n2][inet[/192.168.122.12:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:08:58,567][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n2][inet[/192.168.122.12:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:08:58,567][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n2][inet[/192.168.122.12:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:09:02,315][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1348] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:09:02,316][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1351] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:09:03,817][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1352] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:09:03,818][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1355] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:09:05,319][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1356] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:09:05,320][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1359] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:09:25,648][DEBUG][action.admin.cluster.node.stats] [n5] failed to execute on node [OAaXNyIGQYudsy2O5tddmg]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][cluster:monitor/nodes/stats[n]] request_id [1360] timed out after [15001ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:09:51,805][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:09:57,840][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:03,994][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:10,007][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:16,104][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:22,154][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:28,304][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:32,440][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1361] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:10:32,454][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1364] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:10:33,941][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1365] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:10:33,941][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1368] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:10:34,332][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:35,442][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1369] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:10:35,443][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1372] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:10:40,343][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:46,371][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:52,392][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:58,473][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:10:58,743][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], id[297], master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [11]
+[2015-04-02 18:10:58,743][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], id[298], master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [11]
+[2015-04-02 18:10:58,795][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id[323], master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [11]
+[2015-04-02 18:10:58,795][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]], id[324], master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [11]
+[2015-04-02 18:10:58,839][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]], id[302], master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [11]
+[2015-04-02 18:10:58,839][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]]], id[301], master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [11]
+[2015-04-02 18:11:02,477][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1373] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:02,480][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1376] timed out after [3753ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:02,749][DEBUG][action.admin.cluster.state] [n5] no known master node, scheduling a retry
+[2015-04-02 18:11:03,978][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1382] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:03,979][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1386] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:04,476][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:11:05,480][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1389] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:05,480][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1393] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:08,237][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [ElasticsearchTimeoutException[Timeout waiting for task.]]
+[2015-04-02 18:11:10,508][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:11:11,989][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1395] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:11,989][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1398] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:13,491][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1404] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:13,492][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1408] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:14,995][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1411] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:14,996][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1415] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:16,676][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:11:17,747][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [ElasticsearchTimeoutException[Timeout waiting for task.]]
+[2015-04-02 18:11:21,499][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1417] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:21,499][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1420] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:22,864][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:11:23,001][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1426] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:23,002][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1430] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:24,503][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1433] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:24,504][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1437] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:27,255][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [ElasticsearchTimeoutException[Timeout waiting for task.]]
+[2015-04-02 18:11:28,885][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:11:31,007][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1439] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:31,008][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1442] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:32,509][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1448] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:32,510][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1452] timed out after [3751ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:32,750][DEBUG][action.admin.cluster.state] [n5] observer: timeout notification from cluster service. timeout setting [30s], time since start [30s]
+[2015-04-02 18:11:34,011][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[#zen_unicast_3#][n5][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1455] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:34,011][WARN ][discovery.zen.ping.unicast] [n5] failed to send ping to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.ReceiveTimeoutTransportException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/unicast] request_id [1459] timed out after [3750ms]
+	at org.elasticsearch.transport.TransportService$TimeoutHandler.run(TransportService.java:531)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+[2015-04-02 18:11:34,943][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:11:36,763][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [ElasticsearchTimeoutException[Timeout waiting for task.]]
+[2015-04-02 18:11:39,482][INFO ][cluster.service          ] [n5] detected_master [n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]], added {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:11:39,647][INFO ][cluster.service          ] [n5] removed {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],}, reason: zen-disco-receive(from master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]])
+[2015-04-02 18:11:39,650][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:11:39,650][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:11:39,650][WARN ][discovery.zen.ping.multicast] [n5] failed to receive confirmation on sent ping response to [[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]]]
+org.elasticsearch.transport.NodeDisconnectedException: [n3][inet[/192.168.122.13:9300]][internal:discovery/zen/multicast] disconnected
+[2015-04-02 18:11:40,491][INFO ][discovery.zen            ] [n5] master_left [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [no longer master]
+[2015-04-02 18:11:40,491][WARN ][discovery.zen            ] [n5] master left (reason = no longer master), current nodes: {[n5][4dq4CSLOSKCopM06HfnCMw][n5][inet[/192.168.122.15:9300]],[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]],}
+[2015-04-02 18:11:40,492][INFO ][cluster.service          ] [n5] removed {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-master_failed ([n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]])
+[2015-04-02 18:11:40,495][INFO ][discovery.zen            ] [n5] failed to send join request to master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], reason [NodeDisconnectedException[[n4][inet[/192.168.122.14:9300]][internal:discovery/zen/join] disconnected]]
+[2015-04-02 18:11:41,030][DEBUG][action.index             ] [n5] observer: timeout notification from cluster service. timeout setting [1m], time since start [1m]
+[2015-04-02 18:11:43,509][INFO ][cluster.service          ] [n5] detected_master [n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]], added {[n3][OAaXNyIGQYudsy2O5tddmg][n3][inet[/192.168.122.13:9300]],[n1][Z-8i6VHlRuK49iWhqJsFxg][n1][inet[/192.168.122.11:9300]],}, reason: zen-disco-receive(from master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]])
+[2015-04-02 18:11:44,300][INFO ][cluster.service          ] [n5] added {[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]],}, reason: zen-disco-receive(from master [[n2][KMX-tXCgSq24p2Yh-H3wpQ][n2][inet[/192.168.122.12:9300]]])
+[2015-04-02 18:12:09,151][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[234], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [11]
+[2015-04-02 18:12:09,152][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[255], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [15]
+[2015-04-02 18:12:09,153][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[263], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [16]
+[2015-04-02 18:12:09,657][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[202], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [9]
+[2015-04-02 18:12:09,657][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[229], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [10]
+[2015-04-02 18:12:09,658][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[241], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [13]
+[2015-04-02 18:12:09,658][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[247], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [14]
+[2015-04-02 18:12:09,658][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[257], master [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [15]
+[2015-04-02 18:12:09,658][WARN ][discovery.zen.ping.multicast] [n5] received ping response ping_response{node [[n4][2vH5KpMETKWmAZRQh0iqdw][n4][inet[/192.168.122.14:9300]]], id[274], master [null], hasJoinedOnce [true], cluster_name[elasticsearch]} with no matching id [17]
+[2015-04-02 18:12:10,276][INFO ][node                     ] [n5] stopping ...
+[2015-04-02 18:12:10,325][INFO ][node                     ] [n5] stopped
+[2015-04-02 18:12:10,325][INFO ][node                     ] [n5] closing ...
+[2015-04-02 18:12:10,331][INFO ][node                     ] [n5] closed
