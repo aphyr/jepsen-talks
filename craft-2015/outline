@@ -1,5 +1,0 @@
-MongoDB
-  - JOURNAL_SAFE & friends aren't: if node crashes, election could destroy
-    your writes.
-  - Arbiters count for WriteConcern.MAJORITY but store no data
-  - There's no way to do a linearizable read; just a blind primary read.
